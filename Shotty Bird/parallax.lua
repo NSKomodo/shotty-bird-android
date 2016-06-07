@@ -19,7 +19,17 @@ local function scroll(layer, event)
 		layer.x = layer.x + layer.speed
 	else
 		if (gameplay) then
-			-- TODO: compensate for gameplay speeds
+			if (layer.speed == gameSpeed) then
+				layer.x = -(layer.contentWidth - 19)
+			elseif (layer.speed == 7) then
+				layer.x = -(layer.contentWidth - 13)
+			elseif (layer.speed == 5) then
+				layer.x = -(layer.contentWidth - 7)
+			elseif (layer.speed == 3) then
+				layer.x = -(layer.contentWidth - 5)
+			elseif (layer.speed == 2) then
+				layer.x = -(layer.contentWidth - 3)
+			end
 		else
 			layer.x = -(layer.contentWidth - 3)
 		end
@@ -55,10 +65,10 @@ function P.init(layers, forGameplay)
 		local speed1 = 0.0
 
 		if (forGameplay) then
-			speed5 = 1
-			speed4 = 2
-			speed3 = 6
-			speed2 = 10
+			speed5 = 2
+			speed4 = 3
+			speed3 = 5
+			speed2 = 7
 			speed1 = gameSpeed
 		else
 			speed5 = 0.1
