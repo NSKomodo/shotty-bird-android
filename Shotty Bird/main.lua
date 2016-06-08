@@ -10,10 +10,6 @@
 
 display.setDefault("background", 1, 1, 1)
 
-local physics = require("physics")
---physics.setDrawMode("hybrid")
-physics.start()
-
 local parallax = require("parallax")
 parallax.init(true)
 parallax.start()
@@ -39,7 +35,6 @@ local function spawnBird()
 	local bird = display.newImage("assets/birds/yellow_fat_bird/yellow_fat_bird_1.png")
 	bird.zPosition = zPosition
 	bird.name = "bird"
-	physics.addBody(bird, "kinematic", { density = 1.0, friction = 0.3, bounce = 0.2 })
 
 	if zPosition == 4 then
 		bird:scale(0.6, 0.6)
@@ -185,7 +180,6 @@ local function shoot(tap)
 	missile.zPosition = 5
 	missile.name = "missile"
 	missile:scale(0.6, 0.6)
-	physics.addBody(missile, "static", { density = 1.0, friction = 0.3, bounce = 0.2 })
 	zLayer5:insert(missile)
 
 	transition.to(missile, { time = 200, xScale = 0.5, yScale = 0.5, onComplete = validateCollision })

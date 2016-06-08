@@ -11,7 +11,7 @@ local P = {}
 P.ready = false
 P.currentIndex = 0
 
-local gameSpeed = 14.0
+local gameSpeed = 12.0
 local menuSpeed = 2.0
 local gameplay = false
 
@@ -28,15 +28,15 @@ local function scroll(layer, event)
 	else
 		if (gameplay) then
 			if layer.speed == gameSpeed then
-				layer.x = -(layer.contentWidth - 19)
-			elseif layer.speed == 7 then
+				layer.x = -(layer.contentWidth - 28)
+			elseif layer.speed == 9 then
+				layer.x = -(layer.contentWidth - 15)
+			elseif layer.speed == 6 then
 				layer.x = -(layer.contentWidth - 13)
-			elseif layer.speed == 5 then
+			elseif layer.speed == 4 then
 				layer.x = -(layer.contentWidth - 7)
-			elseif layer.speed == 3 then
-				layer.x = -(layer.contentWidth - 5)
 			elseif layer.speed == 2 then
-				layer.x = -(layer.contentWidth - 3)
+				layer.x = -(layer.contentWidth - 7)
 			end
 		else
 			layer.x = -(layer.contentWidth - 3)
@@ -85,9 +85,9 @@ function P.init(forGameplay, bgIndex)
 
 		if forGameplay then
 			speed5 = 2
-			speed4 = 3
-			speed3 = 5
-			speed2 = 7
+			speed4 = 4
+			speed3 = 6
+			speed2 = 9
 			speed1 = gameSpeed
 		else
 			speed5 = 0.1
