@@ -11,15 +11,6 @@
 local composer = require( "composer" )
 local scene = composer.newScene()
 
----------------------------------------------------------------------------------
--- All code outside of the listener functions will only be executed ONCE
--- unless "composer.removeScene()" is called.
----------------------------------------------------------------------------------
-
--- local forward references should go here
-
----------------------------------------------------------------------------------
-
 local parallax = require("parallax")
 
 local zLayer0 = display.newGroup()
@@ -28,13 +19,16 @@ local zLayer2 = display.newGroup()
 local zLayer3 = display.newGroup()
 local zLayer4 = display.newGroup()
 local zLayer5 = display.newGroup()
+local zLayer6 = display.newGroup()
 
 local lastUpdateTime = 0.0
 local lastSpawnTime = 0.0
 local lastShotFiredTime = 0.0
 
+local lives = 3
 local score = 0
 
+local mute = false
 local music = audio.loadStream("sounds/gameplay_music.mp3")
 local sounds = {
    bird = audio.loadSound("sounds/bird.mp3"),
@@ -78,22 +72,6 @@ local function spawnBird()
    local speed = math.random(2, 5)
    transition.to(bird, { time = speed * 1000, x = -(bird.contentWidth / 2), y = bird.y, onComplete = removeBird })
    audio.play(sounds["flap"])
-end
-
-local function update(event)
-   local timeSinceLast = event.time - lastUpdateTime
-   lastUpdateTime = system.getTimer()
-
-   if timeSinceLast > 1000 then
-      timeSinceLast = 1 / 60 * 1000
-   end
-
-   lastSpawnTime = lastSpawnTime + timeSinceLast
-
-   if lastSpawnTime > 1000 then
-      spawnBird()
-      lastSpawnTime = 0.0
-   end
 end
 
 local function hasCollided( obj1, obj2 )
@@ -216,14 +194,38 @@ local function shoot(tap)
    transition.to(missile, { time = 200, xScale = 0.5, yScale = 0.5, onComplete = validateCollision })
 end
 
--- "scene:create()"
-function scene:create( event )
+local function update(event)
+   local timeSinceLast = event.time - lastUpdateTime
+   lastUpdateTime = system.getTimer()
 
+   if timeSinceLast > 1000 then
+      timeSinceLast = 1 / 60 * 1000
+   end
+
+   lastSpawnTime = lastSpawnTime + timeSinceLast
+
+   if lastSpawnTime > 1000 then
+      spawnBird()
+      lastSpawnTime = 0.0
+   end
+end
+
+-- "scene:create()"
+function scene:create(event)
    local sceneGroup = self.view
+
+   local params = event.params
+   mute = params.muteValue
+
+   if mute then
+      audio.setVolume(0.0)
+   else
+      audio.setVolume(1.0)
+   end
 
    -- Initialize the scene here.
    -- Example: add display objects to "sceneGroup", add touch listeners, etc.
-   parallax.init(sceneGroup, true)
+   parallax.init(sceneGroup, true, params.parallaxIndex)
 
    sceneGroup:insert(zLayer0)
    sceneGroup:insert(zLayer1)
@@ -231,26 +233,25 @@ function scene:create( event )
    sceneGroup:insert(zLayer3)
    sceneGroup:insert(zLayer4)
    sceneGroup:insert(zLayer5)
-
-   Runtime:addEventListener("tap", shoot)
+   sceneGroup:insert(zLayer6)
 end
 
 -- "scene:show()"
 function scene:show(event)
-
    local sceneGroup = self.view
    local phase = event.phase
 
    if phase == "did" then
-      Runtime:addEventListener("enterFrame", update)
-      parallax.start()
       audio.play(music, { loops = -1 })
+      parallax.start()
+
+      Runtime:addEventListener("enterFrame", update)
+      Runtime:addEventListener("tap", shoot)
    end
 end
 
 -- "scene:hide()"
 function scene:hide(event)
-
    local sceneGroup = self.view
    local phase = event.phase
 
@@ -265,18 +266,15 @@ end
 
 -- "scene:destroy()"
 function scene:destroy(event)
-
    local sceneGroup = self.view
 
-   -- Called prior to the removal of scene's view ("sceneGroup").
-   -- Insert code here to clean up the scene.
-   -- Example: remove display objects, save state, etc.
    sceneGroup:remove(zLayer0)
    sceneGroup:remove(zLayer1)
    sceneGroup:remove(zLayer2)
    sceneGroup:remove(zLayer3)
    sceneGroup:remove(zLayer4)
    sceneGroup:remove(zLayer5)
+   sceneGroup:remove(zLayer6)
 
    zLayer0 = nil
    zLayer1 = nil
@@ -284,8 +282,7 @@ function scene:destroy(event)
    zLayer3 = nil
    zLayer4 = nil
    zLayer5 = nil
-
-   parallax = nil
+   zLayer6 = nil
 
    audio.stop()
 

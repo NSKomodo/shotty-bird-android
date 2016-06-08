@@ -71,6 +71,7 @@ function P.init(sceneGroup, forGameplay, bgIndex)
 		math.randomseed(os.time())
 		local index = math.random(1, #backgrounds)
 		layers = backgrounds[index]
+		P.currentIndex = index
 	else
 		P.currentIndex = bgIndex
 		layers = backgrounds[bgIndex]

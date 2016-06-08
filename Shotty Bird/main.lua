@@ -8,12 +8,5 @@
 --
 -----------------------------------------------------------------------------------------
 
-display.setDefault("background", 1, 1, 1)
-
 local composer = require("composer")
-local options = {
-   effect = "fade",
-   time = 500
-}
-
-composer.gotoScene("gameScene", options)
+composer.gotoScene("mainMenuScene", { effect = "fade", time = 500 })
