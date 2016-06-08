@@ -23,19 +23,19 @@ local backgrounds = {
 }
 
 local function scroll(layer, event)
-	if (layer.x < layer.contentWidth) then
+	if layer.x < layer.contentWidth then
 		layer.x = layer.x + layer.speed
 	else
 		if (gameplay) then
-			if (layer.speed == gameSpeed) then
+			if layer.speed == gameSpeed then
 				layer.x = -(layer.contentWidth - 19)
-			elseif (layer.speed == 7) then
+			elseif layer.speed == 7 then
 				layer.x = -(layer.contentWidth - 13)
-			elseif (layer.speed == 5) then
+			elseif layer.speed == 5 then
 				layer.x = -(layer.contentWidth - 7)
-			elseif (layer.speed == 3) then
+			elseif layer.speed == 3 then
 				layer.x = -(layer.contentWidth - 5)
-			elseif (layer.speed == 2) then
+			elseif layer.speed == 2 then
 				layer.x = -(layer.contentWidth - 3)
 			end
 		else
@@ -62,7 +62,7 @@ local layer5 = {}
 local layer5Clone = {}
 
 function P.init(forGameplay, bgIndex)
-	if (bgIndex == nil) then
+	if bgIndex == nil then
 		math.randomseed(os.time())
 		local index = math.random(1, #backgrounds)
 		layers = backgrounds[index]
@@ -71,7 +71,7 @@ function P.init(forGameplay, bgIndex)
 		layers = backgrounds[bgIndex]
 	end
 
-	if (#layers ~= 5) then
+	if #layers ~= 5 then
 		print("The layers table must contain exactly 5 elements.")
 		return
 	else
@@ -83,7 +83,7 @@ function P.init(forGameplay, bgIndex)
 		local speed2 = 0.0
 		local speed1 = 0.0
 
-		if (forGameplay) then
+		if forGameplay then
 			speed5 = 2
 			speed4 = 3
 			speed3 = 5
@@ -152,7 +152,7 @@ function P.init(forGameplay, bgIndex)
 end
  
 function P.start()
-	if (P.ready) then
+	if P.ready then
 	    Runtime:addEventListener("enterFrame", layer1)
 		Runtime:addEventListener("enterFrame", layer1Clone)
 
@@ -173,7 +173,7 @@ function P.start()
 end
 
 function P.stop()
-	if (P.ready) then
+	if P.ready then
 		Runtime:removeEventListener("enterFrame", layer1)
 		Runtime:removeEventListener("enterFrame", layer1Clone)
 		
