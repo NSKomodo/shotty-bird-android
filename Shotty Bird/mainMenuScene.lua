@@ -82,49 +82,49 @@ function scene:create( event )
    zLayer0:insert(logo)
 
    playButton = display.newImage("assets/main_menu/play_button.png")
-   playButton:scale(0.35, 0.35)
+   playButton:scale(0.4, 0.4)
    playButton.x = display.contentWidth / 2
    playButton.y = display.contentHeight / 2
    playButton:addEventListener("tap", handlePlayButton)
    zLayer0:insert(playButton)
 
    leaderboardButton = display.newImage("assets/main_menu/leaderboard_button.png")
-   leaderboardButton:scale(0.35, 0.35)
+   leaderboardButton:scale(0.4, 0.4)
    leaderboardButton.x = display.contentWidth / 2
    leaderboardButton.y =  5 + playButton.y + leaderboardButton.contentHeight
    leaderboardButton:addEventListener("tap", handleLeaderboardButton)
    zLayer0:insert(leaderboardButton)
 
    creditsButton = display.newImage("assets/main_menu/credits_button.png")
-   creditsButton:scale(0.35, 0.35)
+   creditsButton:scale(0.4, 0.4)
    creditsButton.x = display.contentWidth / 2
    creditsButton.y =  5 + leaderboardButton.y + creditsButton.contentHeight
    creditsButton:addEventListener("tap", handleCreditsButton)
    zLayer0:insert(creditsButton)
 
    twitterButton = display.newImage("assets/twitter_button.png")
-   twitterButton:scale(0.35, 0.35)
+   twitterButton:scale(0.5, 0.5)
    twitterButton.x = 25
-   twitterButton.y = display.contentHeight - 20
+   twitterButton.y = display.contentHeight - 25
    twitterButton:addEventListener("tap", handleTwitterButton)
    zLayer0:insert(twitterButton)
 
    facebookButton = display.newImage("assets/facebook_button.png")
-   facebookButton:scale(0.35, 0.35)
+   facebookButton:scale(0.5, 0.5)
    facebookButton.x = 10 + twitterButton.x + facebookButton.contentWidth
    facebookButton.y = twitterButton.y
    facebookButton:addEventListener("tap", handleFacebookButton)
    zLayer0:insert(facebookButton)
 
    unmuteButton = display.newImage("assets/unmute_button.png")
-   unmuteButton:scale(0.35, 0.35)
+   unmuteButton:scale(0.5, 0.5)
    unmuteButton.x = display.contentWidth - 25
    unmuteButton.y = twitterButton.y
    unmuteButton:addEventListener("tap", handleUnmuteButton)
    zLayer0:insert(unmuteButton) 
 
    muteButton = display.newImage("assets/mute_button.png")
-   muteButton:scale(0.35, 0.35)
+   muteButton:scale(0.5, 0.5)
    muteButton.x = unmuteButton.x
    muteButton.y = unmuteButton.y
    muteButton:addEventListener("tap", handleMuteButton)
