@@ -9,10 +9,18 @@
 -----------------------------------------------------------------------------------------
 local P = {}
 P.ready = false
+P.currentIndex = 0
 
 local gameSpeed = 14.0
 local menuSpeed = 2.0
 local gameplay = false
+
+-- TODO: add all backgrounds
+local backgrounds = {
+	{ "assets/bgs/bg1/bg1_layer5.png", "assets/bgs/bg1/bg1_layer4.png", "assets/bgs/bg1/bg1_layer3.png", "assets/bgs/bg1/bg1_layer2.png", "assets/bgs/bg1/bg1_layer1.png" },
+	{ "assets/bgs/bg2/bg2_layer5.png", "assets/bgs/bg2/bg2_layer4.png", "assets/bgs/bg2/bg2_layer3.png", "assets/bgs/bg2/bg2_layer2.png", "assets/bgs/bg2/bg2_layer1.png" },
+	{ "assets/bgs/bg3/bg3_layer5.png", "assets/bgs/bg3/bg3_layer4.png", "assets/bgs/bg3/bg3_layer3.png", "assets/bgs/bg3/bg3_layer2.png", "assets/bgs/bg3/bg3_layer1.png" },
+}
 
 local function scroll(layer, event)
 	if (layer.x < layer.contentWidth) then
@@ -36,6 +44,8 @@ local function scroll(layer, event)
 	end
 end
 
+local layers = {}
+
 local layer1 = {}
 local layer1Clone = {}
 
@@ -51,7 +61,16 @@ local layer4Clone = {}
 local layer5 = {}
 local layer5Clone = {}
 
-function P.init(layers, forGameplay)
+function P.init(forGameplay, bgIndex)
+	if (bgIndex == nil) then
+		math.randomseed(os.time())
+		local index = math.random(1, #backgrounds)
+		layers = backgrounds[index]
+	else
+		P.currentIndex = bgIndex
+		layers = backgrounds[bgIndex]
+	end
+
 	if (#layers ~= 5) then
 		print("The layers table must contain exactly 5 elements.")
 		return
@@ -185,7 +204,11 @@ function P.stop()
 		layer5 = nil
 		layer5Clone = nil
 
+		backgrounds = nil
+		layers = nil
+
 		P.ready = false
+		P.currentIndex = 0
 	else
 		print("Parallax is not initialized")
 	end
