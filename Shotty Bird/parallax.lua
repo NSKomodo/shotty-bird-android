@@ -61,7 +61,12 @@ local layer4Clone = {}
 local layer5 = {}
 local layer5Clone = {}
 
-function P.init(forGameplay, bgIndex)
+function P.init(sceneGroup, forGameplay, bgIndex)
+	if sceneGroup == nil then
+		print("The scene group cannot be nil")
+		return
+	end
+
 	if bgIndex == nil then
 		math.randomseed(os.time())
 		local index = math.random(1, #backgrounds)
@@ -101,51 +106,61 @@ function P.init(forGameplay, bgIndex)
 		layer5.x = layer5.width / 2
 		layer5.enterFrame = scroll
 		layer5.speed = speed5
+		sceneGroup:insert(layer5)
 
 		layer5Clone = display.newImageRect(layers[1], display.contentWidth * 2, display.contentHeight * 2)
 		layer5Clone.x = -layer5.x
 		layer5Clone.enterFrame = scroll
 		layer5Clone.speed = speed5
+		sceneGroup:insert(layer5Clone)
 
 		layer4 = display.newImageRect(layers[2], display.contentWidth * 2, display.contentHeight * 2)
 		layer4.x = layer4.width / 2
 		layer4.enterFrame = scroll
 		layer4.speed = speed4
+		sceneGroup:insert(layer4)
 
 		layer4Clone = display.newImageRect(layers[2], display.contentWidth * 2, display.contentHeight * 2)
 		layer4Clone.x = -layer4.x
 		layer4Clone.enterFrame = scroll
 		layer4Clone.speed = speed4
+		sceneGroup:insert(layer4Clone)
 
 		layer3 = display.newImageRect(layers[3], display.contentWidth * 2, display.contentHeight * 2)
 		layer3.x = layer3.width / 2
 		layer3.enterFrame = scroll
 		layer3.speed = speed3
+		sceneGroup:insert(layer3)
 
 		layer3Clone = display.newImageRect(layers[3], display.contentWidth * 2, display.contentHeight * 2)
 		layer3Clone.x = -layer3.x
 		layer3Clone.enterFrame = scroll
 		layer3Clone.speed = speed3
+		sceneGroup:insert(layer3Clone)
 
 		layer2 = display.newImageRect(layers[4], display.contentWidth * 2, display.contentHeight * 2)
 		layer2.x = layer2.width / 2
 		layer2.enterFrame = scroll
 		layer2.speed = speed2
+		sceneGroup:insert(layer2)
 
 		layer2Clone = display.newImageRect(layers[4], display.contentWidth * 2, display.contentHeight * 2)
 		layer2Clone.x = -layer2.x
 		layer2Clone.enterFrame = scroll
 		layer2Clone.speed = speed2
+		sceneGroup:insert(layer2Clone)
 
 		layer1 = display.newImageRect(layers[5], display.contentWidth * 2, display.contentHeight * 2)
 		layer1.x = layer1.width / 2
 		layer1.enterFrame = scroll
 		layer1.speed = speed1
+		sceneGroup:insert(layer1)
 
 		layer1Clone = display.newImageRect(layers[5], display.contentWidth * 2, display.contentHeight * 2)
 		layer1Clone.x = -layer1.x
 		layer1Clone.enterFrame = scroll
 		layer1Clone.speed = speed1
+		sceneGroup:insert(layer1Clone)
 
 		P.ready = true
 	end
@@ -189,18 +204,28 @@ function P.stop()
 		Runtime:removeEventListener("enterFrame", layer5)
 		Runtime:removeEventListener("enterFrame", layer5Clone)
 
+		sceneGroup:remove(layer1)
+		sceneGroup:remove(layer1Clone)
 		layer1 = nil
 		layer1Clone = nil
 		
+		sceneGroup:remove(layer2)
+		sceneGroup:remove(layer2Clone)
 		layer2 = nil
 		layer2Clone = nil
 		
+		sceneGroup:remove(layer3)
+		sceneGroup:remove(layer3Clone)
 		layer3 = nil
 		layer3Clone = nil
 		
+		sceneGroup:remove(layer4)
+		sceneGroup:remove(layer4Clone)
 		layer4 = nil
 		layer4Clone = nil
 		
+		sceneGroup:remove(layer5)
+		sceneGroup:remove(layer5Clone)
 		layer5 = nil
 		layer5Clone = nil
 
