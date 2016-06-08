@@ -20,14 +20,14 @@ local sounds = {
    bird = audio.loadSound("sounds/bird.mp3")
 }
 
-local logo
-local playButton
-local leaderboardButton
-local creditsButton
-local twitterButton
-local facebookButton
-local unmuteButton
-local muteButton
+local logo = nil
+local playButton = nil
+local leaderboardButton = nil
+local creditsButton = nil
+local twitterButton = nil
+local facebookButton = nil
+local unmuteButton = nil
+local muteButton = nil
 
 local function handlePlayButton(tap)
    composer.gotoScene("gameScene", { effect = "crossFade", time = 300, params = { muteValue = mute, parallaxIndex = parallax.currentIndex } })
