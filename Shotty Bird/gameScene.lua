@@ -38,9 +38,9 @@ local score = 0
 local music = audio.loadStream("sounds/gameplay_music.mp3")
 local sounds = {
    bird = audio.loadSound("sounds/bird.mp3"),
-   flap = audio.loadSound("sounds/wing_flap.mp3")
+   flap = audio.loadSound("sounds/wing_flap.mp3"),
    shot = audio.loadSound("sounds/shot.mp3"),
-   explosion = audio.loadSound("sounds/explosion.mp3"),
+   explosion = audio.loadSound("sounds/explosion.mp3")
 }
 
 local function spawnBird()
