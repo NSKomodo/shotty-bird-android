@@ -30,7 +30,8 @@ local unmuteButton
 local muteButton
 
 local function handlePlayButton(tap)
-   composer.gotoScene("gameScene", { effect = "fade", time = 300, params = { muteValue = mute, parallaxIndex = parallax.currentIndex } })
+   composer.gotoScene("gameScene", { effect = "crossFade", time = 300, params = { muteValue = mute, parallaxIndex = parallax.currentIndex } })
+   composer.removeScene("mainMenuScene")
 end
 
 local function handleLeaderboardButton(tap)
@@ -120,19 +121,26 @@ function scene:create( event )
    unmuteButton.x = display.contentWidth - 25
    unmuteButton.y = twitterButton.y
    unmuteButton:addEventListener("tap", handleUnmuteButton)
-   unmuteButton.isVisible = false
    zLayer0:insert(unmuteButton) 
-   
+
    muteButton = display.newImage("assets/mute_button.png")
    muteButton:scale(0.35, 0.35)
    muteButton.x = unmuteButton.x
    muteButton.y = unmuteButton.y
    muteButton:addEventListener("tap", handleMuteButton)
    zLayer0:insert(muteButton)
+
+   if audio.getVolume() == 0 then
+      unmuteButton.isVisible = true
+      muteButton.isVisible = false
+   else
+      unmuteButton.isVisible = false
+      muteButton.isVisible = true
+   end
 end
 
 -- "scene:show()"
-function scene:show( event )
+function scene:show(event)
    local sceneGroup = self.view
    local phase = event.phase
 
@@ -143,7 +151,7 @@ function scene:show( event )
 end
 
 -- "scene:hide()"
-function scene:hide( event )
+function scene:hide(event)
    local sceneGroup = self.view
    local phase = event.phase
 
@@ -155,13 +163,12 @@ function scene:hide( event )
 end
 
 -- "scene:destroy()"
-function scene:destroy( event )
+function scene:destroy(event)
    local sceneGroup = self.view
    sceneGroup:remove(zLayer0)
    
    zLayer0 = nil
    audio.stop()
-   parallax.stop()
 
    for s, v in pairs(sounds) do
        audio.dispose(sounds[s])
@@ -174,10 +181,10 @@ end
 ---------------------------------------------------------------------------------
 
 -- Listener setup
-scene:addEventListener( "create", scene )
-scene:addEventListener( "show", scene )
-scene:addEventListener( "hide", scene )
-scene:addEventListener( "destroy", scene )
+scene:addEventListener("create", scene)
+scene:addEventListener("show", scene)
+scene:addEventListener("hide", scene)
+scene:addEventListener("destroy", scene)
 
 ---------------------------------------------------------------------------------
 

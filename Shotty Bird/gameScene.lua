@@ -67,6 +67,15 @@ local function spawnBird()
       audio.play(sounds["bird"])
       bird:removeSelf()
       bird = nil
+
+      lives = lives - 1
+
+      if lives == 0 then
+         -- TODO: composer.gotoScene("gameOverScene")
+         transition.cancel()
+         composer.gotoScene("mainMenuScene", { effect = "crossFade", time = 300 })
+         composer.removeScene("gameScene")
+      end
    end
 
    local speed = math.random(2, 5)
@@ -180,7 +189,7 @@ local function validateCollision(missile)
 end
 
 local function shoot(tap)
-   -- TODO: prevent missile spamming and add sounds
+   -- TODO: prevent missile spamming
    audio.play(sounds["shot"])
 
    local missile = display.newImage("assets/missile/missile_1.png")
@@ -204,7 +213,7 @@ local function update(event)
 
    lastSpawnTime = lastSpawnTime + timeSinceLast
 
-   if lastSpawnTime > 1000 then
+   if lastSpawnTime > 2200 then
       spawnBird()
       lastSpawnTime = 0.0
    end
@@ -223,8 +232,6 @@ function scene:create(event)
       audio.setVolume(1.0)
    end
 
-   -- Initialize the scene here.
-   -- Example: add display objects to "sceneGroup", add touch listeners, etc.
    parallax.init(sceneGroup, true, params.parallaxIndex)
 
    sceneGroup:insert(zLayer0)
@@ -256,9 +263,10 @@ function scene:hide(event)
    local phase = event.phase
 
    if phase == "will" then
-      -- Called when the scene is on screen (but is about to go off screen).
-      -- Insert code here to "pause" the scene.
-      -- Example: stop timers, stop animation, stop audio, etc.
+      audio.stop()
+
+      Runtime:removeEventListener("enterFrame", update)
+      Runtime:removeEventListener("tap", shoot)
    elseif phase == "did" then
       -- Called immediately after scene goes off screen.
    end
@@ -292,15 +300,18 @@ function scene:destroy(event)
    end
 
    audio.dispose(music)
+
+   Runtime:removeEventListener("enterFrame", update)
+   Runtime:removeEventListener("tap", shoot)
 end
 
 ---------------------------------------------------------------------------------
 
 -- Listener setup
-scene:addEventListener( "create", scene )
-scene:addEventListener( "show", scene )
-scene:addEventListener( "hide", scene )
-scene:addEventListener( "destroy", scene )
+scene:addEventListener("create", scene)
+scene:addEventListener("show", scene)
+scene:addEventListener("hide", scene)
+scene:addEventListener("destroy", scene)
 
 ---------------------------------------------------------------------------------
 
