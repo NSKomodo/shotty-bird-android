@@ -16,5 +16,6 @@ application = {
       height = aspectRatio < 1.5 and 480 or math.floor(320 * aspectRatio),
       scale = "letterBox",
       fps = 60,
+      audioPlayFrequency = 44100,
    },
 }

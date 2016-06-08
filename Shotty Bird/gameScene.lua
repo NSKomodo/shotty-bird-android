@@ -35,6 +35,14 @@ local lastShotFiredTime = 0.0
 
 local score = 0
 
+local music = audio.loadStream("sounds/gameplay_music.wav")
+local sounds = {
+    shot = audio.loadSound("sounds/shot.wav"),
+    explosion = audio.loadSound("sounds/explosion.wav"),
+    bird = audio.loadSound("sounds/bird.wav"),
+    flap = audio.loadSound("sounds/wing_flap.wav")
+}
+
 local function spawnBird()
    math.randomseed(os.time())
    local zPosition = math.random(1, 4)
@@ -62,12 +70,14 @@ local function spawnBird()
    bird.y = math.random(20 + bird.contentHeight / 2, display.contentHeight - bird.contentHeight)
 
    local function removeBird(bird)
+      audio.play(sounds["bird"])
       bird:removeSelf()
       bird = nil
    end
 
    local speed = math.random(2, 5)
    transition.to(bird, { time = speed * 1000, x = -(bird.contentWidth / 2), y = bird.y, onComplete = removeBird })
+   audio.play(sounds["flap"])
 end
 
 local function update(event)
@@ -99,6 +109,7 @@ local function hasCollided( obj1, obj2 )
     return (left or right) and (up or down)
 end
 
+-- TODO: add explosion animation
 local function validateCollision(missile)
    missile.zPosition = missile.zPosition - 1
 
@@ -117,6 +128,8 @@ local function validateCollision(missile)
             for i = 1, zLayer4.numChildren do
                if zLayer4[i].name == "bird" then
                   if hasCollided(missile, zLayer4[i]) then
+                     audio.play(sounds["explosion"])
+
                      missile:removeSelf()
                      transition.cancel(zLayer4[i])
                      zLayer4[i]:removeSelf()
@@ -132,6 +145,8 @@ local function validateCollision(missile)
             for i = 1, zLayer3.numChildren do
                if zLayer3[i].name == "bird" then
                   if hasCollided(missile, zLayer3[i]) then
+                     audio.play(sounds["explosion"])
+
                      missile:removeSelf()
                      transition.cancel(zLayer3[i])
                      zLayer3[i]:removeSelf()
@@ -147,6 +162,8 @@ local function validateCollision(missile)
             for i = 1, zLayer2.numChildren do
                if zLayer2[i].name == "bird" then
                   if hasCollided(missile, zLayer2[i]) then
+                     audio.play(sounds["explosion"])
+
                      missile:removeSelf()
                      transition.cancel(zLayer2[i])
                      zLayer2[i]:removeSelf()
@@ -162,6 +179,8 @@ local function validateCollision(missile)
             for i = 1, zLayer1.numChildren do
                if zLayer1[i].name == "bird" then
                   if hasCollided(missile, zLayer1[i]) then
+                     audio.play(sounds["explosion"])
+
                      missile:removeSelf()
                      transition.cancel(zLayer1[i])
                      zLayer1[i]:removeSelf()
@@ -184,6 +203,8 @@ end
 
 local function shoot(tap)
    -- TODO: prevent missile spamming and add sounds
+   audio.play(sounds["shot"])
+
    local missile = display.newImage("assets/missile/missile_1.png")
    missile.x = tap.x
    missile.y = tap.y
@@ -221,8 +242,9 @@ function scene:show(event)
    local phase = event.phase
 
    if phase == "did" then
-      parallax.start()
       Runtime:addEventListener("enterFrame", update)
+      parallax.start()
+      audio.play(music, { loops = -1 })
    end
 end
 
@@ -264,6 +286,15 @@ function scene:destroy(event)
    zLayer5 = nil
 
    parallax = nil
+
+   audio.stop()
+
+   for s, v in pairs(sounds) do
+       audio.dispose(sounds[s])
+       sounds[s] = nil
+   end
+
+   audio.dispose(music)
 end
 
 ---------------------------------------------------------------------------------
