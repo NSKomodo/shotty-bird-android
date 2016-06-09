@@ -37,12 +37,32 @@ local sounds = {
    explosion = audio.loadSound("sounds/explosion.mp3")
 }
 
+local missileSheetInfo = require("missileSheet")
+local missileImageSheet = graphics.newImageSheet("assets/missile/missileSheet.png", missileSheetInfo:getSheet())
+
+local birdSheetInfo = require("birdSheet")
+local birdImageSheet = graphics.newImageSheet("assets/birds/birdSheet.png", birdSheetInfo:getSheet())
+
 local function spawnBird()
    math.randomseed(os.time())
    local zPosition = math.random(1, 4)
 
-   -- TODO: implement as sprites and randomize birds
-   local bird = display.newImage("assets/birds/yellow_fat_bird/yellow_fat_bird_1.png")
+   local birds = { 1, 3, 5, 7, 9, 11 }
+   local birdIndex = math.random(1, #birds)
+   local randomBird = birds[birdIndex]
+
+   local sequences_flyingBird = {
+       {
+           name = "fly",
+           start = randomBird,
+           count = 2,
+           time = 200,
+           loopCount = 0,
+           loopDirection = "forward"
+       }
+   }
+
+   local bird = display.newSprite(birdImageSheet, sequences_flyingBird)
    bird.zPosition = zPosition
    bird.name = "bird"
 
@@ -62,12 +82,14 @@ local function spawnBird()
 
    bird.x = display.contentWidth + bird.contentWidth / 2
    bird.y = math.random(20 + bird.contentHeight / 2, display.contentHeight - bird.contentHeight)
+   bird:play()
 
    local function removeBird(bird)
       audio.play(sounds["bird"])
       bird:removeSelf()
       bird = nil
 
+      -- TODO: update life nodes with skulls
       lives = lives - 1
 
       if lives == 0 then
@@ -78,12 +100,14 @@ local function spawnBird()
       end
    end
 
-   local speed = math.random(2, 5)
+   local speed = math.random(3, 6)
+   bird.speed = speed
+
    transition.to(bird, { time = speed * 1000, x = -(bird.contentWidth / 2), y = bird.y, onComplete = removeBird })
    audio.play(sounds["flap"])
 end
 
-local function hasCollided( obj1, obj2 )
+local function hasCollided(obj1, obj2)
     if obj1 == nil or obj2 == nil then
         return false
     end
@@ -189,15 +213,26 @@ local function validateCollision(missile)
 end
 
 local function shoot(tap)
-   -- TODO: prevent missile spamming
    audio.play(sounds["shot"])
 
-   local missile = display.newImage("assets/missile/missile_1.png")
+   local sequences_missile = {
+       {
+           name = "shoot",
+           start = 1,
+           count = 3,
+           time = 100,
+           loopCount = 0,
+           loopDirection = "forward"
+       }
+   }
+
+   local missile = display.newSprite(missileImageSheet, sequences_missile)
    missile.x = tap.x
    missile.y = tap.y
    missile.zPosition = 5
    missile.name = "missile"
    missile:scale(0.6, 0.6)
+   missile:play()
    zLayer5:insert(missile)
 
    transition.to(missile, { time = 200, xScale = 0.5, yScale = 0.5, onComplete = validateCollision })
