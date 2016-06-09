@@ -34,7 +34,7 @@ local function handlePlayButton(tap)
 end
 
 local function handleLeaderboardButton(tap)
-   -- TODO: show whatever Google Uses as Game Center Equivalent
+   -- TODO: show whatever Google uses as Game Center equivalent
    audio.play(sounds["bird"])
    print("Go to leaderboard....")
 end
