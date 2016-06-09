@@ -33,7 +33,7 @@ local sounds = {
 
 local function gotoGame(event)
 	if event.completed then
-		composer.gotoScene("gameScene", { effect = "crossFade", time = 300, params = { parallaxIndex = parallax.currentIndex } })
+		composer.gotoScene("gameScene", { effect = "crossFade", time = 500, params = { parallaxIndex = parallax.currentIndex } })
 		composer.removeScene("tutorialScene")
 	end
 end

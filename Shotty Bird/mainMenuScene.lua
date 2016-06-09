@@ -29,27 +29,32 @@ local unmuteButton = nil
 local muteButton = nil
 
 local function handlePlayButton(tap)
-   composer.gotoScene("tutorialScene", { effect = "crossFade", time = 300, params = { parallaxIndex = parallax.currentIndex } })
+   composer.gotoScene("tutorialScene", { effect = "crossFade", time = 500, params = { parallaxIndex = parallax.currentIndex } })
    composer.removeScene("mainMenuScene")
 end
 
 local function handleLeaderboardButton(tap)
+   -- TODO: show whatever Google Uses as Game Center Equivalent
    audio.play(sounds["bird"])
    print("Go to leaderboard....")
 end
 
 local function handleCreditsButton(tap)
-   audio.play(sounds["bird"])
-   print("Go to credits....")
+   local function gotoCredits(event)
+      if event.completed then
+         composer.gotoScene("creditsScene", { effect = "slideUp", time = 500, params = { parallaxIndex = parallax.currentIndex } })
+         composer.removeScene("mainMenuScene")
+      end
+   end
+
+   audio.play(sounds["bird"], { onComplete = gotoCredits })
 end
 
 local function handleTwitterButton(tap)
-   audio.play(sounds["bird"])
    system.openURL("http://twitter.com/shottybird")
 end
 
 local function handleFacebookButton(tap)
-   audio.play(sounds["bird"])
    system.openURL("http://facebook.com/shottybird")
 end
 
