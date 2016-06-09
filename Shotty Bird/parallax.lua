@@ -20,6 +20,7 @@ local backgrounds = {
 	{ "assets/bgs/bg1/bg1_layer5.png", "assets/bgs/bg1/bg1_layer4.png", "assets/bgs/bg1/bg1_layer3.png", "assets/bgs/bg1/bg1_layer2.png", "assets/bgs/bg1/bg1_layer1.png" },
 	{ "assets/bgs/bg2/bg2_layer5.png", "assets/bgs/bg2/bg2_layer4.png", "assets/bgs/bg2/bg2_layer3.png", "assets/bgs/bg2/bg2_layer2.png", "assets/bgs/bg2/bg2_layer1.png" },
 	{ "assets/bgs/bg3/bg3_layer5.png", "assets/bgs/bg3/bg3_layer4.png", "assets/bgs/bg3/bg3_layer3.png", "assets/bgs/bg3/bg3_layer2.png", "assets/bgs/bg3/bg3_layer1.png" },
+	{ "assets/bgs/bg8/bg8_layer5.png", "assets/bgs/bg8/bg8_layer4.png", "assets/bgs/bg8/bg8_layer3.png", "assets/bgs/bg8/bg8_layer2.png", "assets/bgs/bg8/bg8_layer1.png" },
 }
 
 local function scroll(layer, event)
@@ -117,48 +118,56 @@ function P.init(sceneGroup, forGameplay, bgIndex)
 
 		layer4 = display.newImageRect(layers[2], display.contentWidth * 2, display.contentHeight * 2)
 		layer4.x = layer4.width / 2
+		layer4.y = 200
 		layer4.enterFrame = scroll
 		layer4.speed = speed4
 		sceneGroup:insert(layer4)
 
 		layer4Clone = display.newImageRect(layers[2], display.contentWidth * 2, display.contentHeight * 2)
 		layer4Clone.x = -layer4.x
+		layer4Clone.y = layer4.y
 		layer4Clone.enterFrame = scroll
 		layer4Clone.speed = speed4
 		sceneGroup:insert(layer4Clone)
 
 		layer3 = display.newImageRect(layers[3], display.contentWidth * 2, display.contentHeight * 2)
 		layer3.x = layer3.width / 2
+		layer3.y = 75
 		layer3.enterFrame = scroll
 		layer3.speed = speed3
 		sceneGroup:insert(layer3)
 
 		layer3Clone = display.newImageRect(layers[3], display.contentWidth * 2, display.contentHeight * 2)
 		layer3Clone.x = -layer3.x
+		layer3Clone.y = layer3.y
 		layer3Clone.enterFrame = scroll
 		layer3Clone.speed = speed3
 		sceneGroup:insert(layer3Clone)
 
 		layer2 = display.newImageRect(layers[4], display.contentWidth * 2, display.contentHeight * 2)
 		layer2.x = layer2.width / 2
+		layer2.y = 65
 		layer2.enterFrame = scroll
 		layer2.speed = speed2
 		sceneGroup:insert(layer2)
 
 		layer2Clone = display.newImageRect(layers[4], display.contentWidth * 2, display.contentHeight * 2)
 		layer2Clone.x = -layer2.x
+		layer2Clone.y = layer2.y
 		layer2Clone.enterFrame = scroll
 		layer2Clone.speed = speed2
 		sceneGroup:insert(layer2Clone)
 
 		layer1 = display.newImageRect(layers[5], display.contentWidth * 2, display.contentHeight * 2)
 		layer1.x = layer1.width / 2
+		layer1.y = 40
 		layer1.enterFrame = scroll
 		layer1.speed = speed1
 		sceneGroup:insert(layer1)
 
 		layer1Clone = display.newImageRect(layers[5], display.contentWidth * 2, display.contentHeight * 2)
 		layer1Clone.x = -layer1.x
+		layer1Clone.y = layer1.y
 		layer1Clone.enterFrame = scroll
 		layer1Clone.speed = speed1
 		sceneGroup:insert(layer1Clone)
