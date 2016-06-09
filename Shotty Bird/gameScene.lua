@@ -310,6 +310,7 @@ function scene:create(event)
    end
 
    parallax.init(sceneGroup, true, params.parallaxIndex)
+   parallax.start()
 
    sceneGroup:insert(zLayer0)
    sceneGroup:insert(zLayer1)
@@ -327,8 +328,7 @@ function scene:show(event)
 
    if phase == "did" then
       audio.play(music, { loops = -1 })
-      parallax.start()
-
+      
       Runtime:addEventListener("enterFrame", update)
       Runtime:addEventListener("tap", shoot)
    end
