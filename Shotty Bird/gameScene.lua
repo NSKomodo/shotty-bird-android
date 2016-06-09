@@ -70,16 +70,16 @@ local function spawnBird()
    bird.name = "bird"
 
    if zPosition == 4 then
-      bird:scale(0.6, 0.6)
+      bird:scale(0.5, 0.5)
       zLayer4:insert(bird)
    elseif zPosition == 3 then
-      bird:scale(0.45, 0.45)
+      bird:scale(0.425, 0.425)
       zLayer3:insert(bird)
    elseif zPosition == 2 then
-      bird:scale(0.35, 0.35)
+      bird:scale(0.325, 0.325)
       zLayer2:insert(bird)
    elseif zPosition == 1 then
-      bird:scale(0.2, 0.2)
+      bird:scale(0.25, 0.25)
       zLayer1:insert(bird)
    end
 
@@ -134,8 +134,7 @@ local function explode(xPos, yPos, xScale, yScale, zLayer)
    local sequences_explosion = {
       {
         name = "explode",
-        start = 1,
-        count = 12,
+        frames = { 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4 },
         time = 350,
         loopCount = 1
       }
@@ -180,7 +179,7 @@ local function validateCollision(missile)
                      zLayer4[i]:removeSelf()
                      zLayer4[i] = nil
 
-                     explode(xPos, yPos, xScale, yScale, zLayer4)
+                     explode(xPos, yPos, 0.35, 0.35, zLayer4)
                      return
                   end
                end
@@ -199,7 +198,7 @@ local function validateCollision(missile)
                      zLayer3[i]:removeSelf()
                      zLayer3[i] = nil
 
-                     explode(xPos, yPos, xScale, yScale, zLayer3)
+                     explode(xPos, yPos, 0.25, 0.25, zLayer3)
                      return
                   end
                end
@@ -218,7 +217,7 @@ local function validateCollision(missile)
                      zLayer2[i]:removeSelf()
                      zLayer2[i] = nil
 
-                     explode(xPos, yPos, xScale, yScale, zLayer2)
+                     explode(xPos, yPos, 0.2, 0.2, zLayer2)
                      return
                   end
                end
@@ -236,7 +235,7 @@ local function validateCollision(missile)
                      transition.cancel(zLayer1[i])
                      zLayer1[i]:removeSelf()
 
-                     explode(xPos, yPos, xScale, yScale, zLayer1)
+                     explode(xPos, yPos, 0.15, 0.15, zLayer1)
                      return
                   end
                end
