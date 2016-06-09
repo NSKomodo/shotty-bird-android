@@ -301,15 +301,9 @@ function scene:create(event)
    local sceneGroup = self.view
 
    local params = event.params
-   mute = params.muteValue
+   local parallaxIndex = params.parallaxIndex
 
-   if mute then
-      audio.setVolume(0.0)
-   else
-      audio.setVolume(1.0)
-   end
-
-   parallax.init(sceneGroup, true, params.parallaxIndex)
+   parallax.init(sceneGroup, true, parallaxIndex)
    parallax.start()
 
    sceneGroup:insert(zLayer0)

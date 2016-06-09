@@ -14,7 +14,6 @@ local scene = composer.newScene()
 local parallax = require("parallax")
 local zLayer0 = display.newGroup()
 
-local mute = false
 local music = audio.loadStream("sounds/menu_music.mp3")
 local sounds = {
    bird = audio.loadSound("sounds/bird.mp3")
@@ -30,7 +29,7 @@ local unmuteButton = nil
 local muteButton = nil
 
 local function handlePlayButton(tap)
-   composer.gotoScene("gameScene", { effect = "crossFade", time = 300, params = { muteValue = mute, parallaxIndex = parallax.currentIndex } })
+   composer.gotoScene("tutorialScene", { effect = "crossFade", time = 300, params = { parallaxIndex = parallax.currentIndex } })
    composer.removeScene("mainMenuScene")
 end
 
@@ -58,14 +57,12 @@ local function handleMuteButton(tap)
    audio.setVolume(0.0)
    muteButton.isVisible = false
    unmuteButton.isVisible = true
-   mute = true
 end
 
 local function handleUnmuteButton(tap)
    audio.setVolume(1.0)
    unmuteButton.isVisible = false
    muteButton.isVisible = true
-   mute = false
 end
 
 -- "scene:create()"
