@@ -37,11 +37,14 @@ local sounds = {
    explosion = audio.loadSound("sounds/explosion.mp3")
 }
 
+local birdSheetInfo = require("birdSheet")
+local birdImageSheet = graphics.newImageSheet("assets/birds/birdSheet.png", birdSheetInfo:getSheet())
+
 local missileSheetInfo = require("missileSheet")
 local missileImageSheet = graphics.newImageSheet("assets/missile/missileSheet.png", missileSheetInfo:getSheet())
 
-local birdSheetInfo = require("birdSheet")
-local birdImageSheet = graphics.newImageSheet("assets/birds/birdSheet.png", birdSheetInfo:getSheet())
+local explosionSheetInfo = require("explosionSheet")
+local explosionImageSheet = graphics.newImageSheet("assets/explosion/explosionSheet.png", explosionSheetInfo:getSheet())
 
 local function spawnBird()
    math.randomseed(os.time())
@@ -120,8 +123,39 @@ local function hasCollided(obj1, obj2)
     return (left or right) and (up or down)
 end
 
+local function handleExplosion(event)
+   if event.phase == "ended" then
+      event.target:removeSelf()
+      event.target = nil
+   end
+end
+
+local function explode(xPos, yPos, xScale, yScale, zLayer)
+   local sequences_explosion = {
+      {
+        name = "explode",
+        start = 1,
+        count = 12,
+        time = 350,
+        loopCount = 1
+      }
+   }
+
+   local explosion = display.newSprite(explosionImageSheet, sequences_explosion)
+   explosion.x = xPos
+   explosion.y = yPos
+   explosion:scale(xScale, yScale)
+   zLayer:insert(explosion)
+   explosion:addEventListener("sprite", handleExplosion)
+   explosion:play()
+end
+
+
 -- TODO: add explosion animation
 local function validateCollision(missile)
+   local xPos = missile.x
+   local yPos = missile.y
+
    missile.zPosition = missile.zPosition - 1
 
    if missile.zPosition == -4 then
@@ -145,6 +179,8 @@ local function validateCollision(missile)
                      transition.cancel(zLayer4[i])
                      zLayer4[i]:removeSelf()
                      zLayer4[i] = nil
+
+                     explode(xPos, yPos, xScale, yScale, zLayer4)
                      return
                   end
                end
@@ -162,6 +198,8 @@ local function validateCollision(missile)
                      transition.cancel(zLayer3[i])
                      zLayer3[i]:removeSelf()
                      zLayer3[i] = nil
+
+                     explode(xPos, yPos, xScale, yScale, zLayer3)
                      return
                   end
                end
@@ -179,6 +217,8 @@ local function validateCollision(missile)
                      transition.cancel(zLayer2[i])
                      zLayer2[i]:removeSelf()
                      zLayer2[i] = nil
+
+                     explode(xPos, yPos, xScale, yScale, zLayer2)
                      return
                   end
                end
@@ -195,6 +235,8 @@ local function validateCollision(missile)
                      missile:removeSelf()
                      transition.cancel(zLayer1[i])
                      zLayer1[i]:removeSelf()
+
+                     explode(xPos, yPos, xScale, yScale, zLayer1)
                      return
                   end
                end
@@ -248,6 +290,7 @@ local function update(event)
 
    lastSpawnTime = lastSpawnTime + timeSinceLast
 
+   -- TODO: increase difficulty based on score
    if lastSpawnTime > 2200 then
       spawnBird()
       lastSpawnTime = 0.0
