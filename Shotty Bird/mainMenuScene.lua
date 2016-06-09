@@ -46,12 +46,12 @@ end
 
 local function handleTwitterButton(tap)
    audio.play(sounds["bird"])
-   print("Go to Twitter....")
+   system.openURL("http://twitter.com/shottybird")
 end
 
 local function handleFacebookButton(tap)
    audio.play(sounds["bird"])
-   print("Go to Facebook....")
+   system.openURL("http://facebook.com/shottybird")
 end
 
 local function handleMuteButton(tap)
