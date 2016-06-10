@@ -96,9 +96,8 @@ local function spawnBird()
       lives = lives - 1
 
       if lives == 0 then
-         -- TODO: composer.gotoScene("gameOverScene")
          transition.cancel()
-         composer.gotoScene("mainMenuScene", { effect = "crossFade", time = 300 })
+         composer.gotoScene("gameOverScene", { effect = "crossFade", time = 200, params = { parallaxIndex = parallax.currentIndex, score = score } })
          composer.removeScene("gameScene")
       end
    end
@@ -149,8 +148,6 @@ local function explode(xPos, yPos, xScale, yScale, zLayer)
    explosion:play()
 end
 
-
--- TODO: add explosion animation
 local function validateCollision(missile)
    local xPos = missile.x
    local yPos = missile.y
@@ -180,6 +177,7 @@ local function validateCollision(missile)
                      zLayer4[i] = nil
 
                      explode(xPos, yPos, 0.35, 0.35, zLayer4)
+                     score = score + 1
                      return
                   end
                end
@@ -199,6 +197,7 @@ local function validateCollision(missile)
                      zLayer3[i] = nil
 
                      explode(xPos, yPos, 0.25, 0.25, zLayer3)
+                     score = score + 1
                      return
                   end
                end
@@ -218,6 +217,7 @@ local function validateCollision(missile)
                      zLayer2[i] = nil
 
                      explode(xPos, yPos, 0.2, 0.2, zLayer2)
+                     score = score + 1
                      return
                   end
                end
@@ -236,6 +236,7 @@ local function validateCollision(missile)
                      zLayer1[i]:removeSelf()
 
                      explode(xPos, yPos, 0.15, 0.15, zLayer1)
+                     score = score + 1
                      return
                   end
                end

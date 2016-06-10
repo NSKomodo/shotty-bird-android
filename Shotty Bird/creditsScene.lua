@@ -52,14 +52,14 @@ function scene:create( event )
 
    itsprof = display.newImage("assets/credits/itsprof.png")
    itsprof:scale(0.4, 0.4)
-   itsprof.x = display.contentWidth / 2
-   itsprof.y = itsprof.height / 2 - 10
+   itsprof.x = display.contentCenterX
+   itsprof.y = itsprof.height / 2 - 30
    itsprof:addEventListener("tap", handleProf)
    sceneGroup:insert(itsprof)
 
    jpalbuja = display.newImage("assets/credits/jpalbuja.png")
    jpalbuja:scale(0.4, 0.4)
-   jpalbuja.x = display.contentWidth / 2
+   jpalbuja.x = display.contentCenterX
    jpalbuja.y = itsprof.y + jpalbuja.height / 2
    jpalbuja:addEventListener("tap", handleJP)
    sceneGroup:insert(jpalbuja)

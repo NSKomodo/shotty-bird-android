@@ -35,4 +35,16 @@ settings =
 			"android.permission.WRITE_EXTERNAL_STORAGE",
 		},
 	},
+
+	--
+	-- Plugins
+	--
+	plugins =
+    {
+        ["CoronaProvider.native.popup.social"] =
+        {
+            publisherId = "com.coronalabs"
+        },
+    },
+
 }
