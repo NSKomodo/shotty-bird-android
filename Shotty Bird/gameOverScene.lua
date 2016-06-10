@@ -192,6 +192,24 @@ end
 function scene:destroy(event)
    local sceneGroup = self.view
 
+   sceneGroup:remove(gameOver)
+   sceneGroup:remove(panel)
+   sceneGroup:remove(scoreText)
+   sceneGroup:remove(bestText)
+   sceneGroup:remove(backButton)
+   sceneGroup:remove(playButton)
+   sceneGroup:remove(leaderboardButton)
+   sceneGroup:remove(shareButton)
+
+   gameOver = nil
+   panel = nil
+   scoreText = nil
+   bestText = nil
+   backButton = nil
+   playButton = nil
+   leaderboardButton = nil
+   shareButton = nil
+
    audio.stop()
 
    for s, v in pairs(sounds) do
