@@ -115,6 +115,22 @@ local function handleShareButton(tap)
    audio.play(sounds["screenshot"], { onComplete = share })
 end
 
+-- AdMob
+local ads = require("ads")
+local adUnit = "ca-app-pub-5774553422556987/6814602958"
+local adProvider = "admob"
+
+local function adListener( event )
+   local msg = event.response
+   print( "Message from the ads library: ", msg )
+ 
+   if (event.isError ) then
+      print("Error, no ad received", msg)
+   else
+      print("Ah ha! Got one!")
+   end
+end
+
 -- "scene:create()"
 function scene:create(event)
    local sceneGroup = self.view
@@ -170,6 +186,8 @@ function scene:create(event)
    shareButton.serviceName = "share"
    shareButton:addEventListener("tap", handleShareButton)
    sceneGroup:insert(shareButton)
+
+   ads.init(adProvider, adUnit, adListener)
 end
  
 -- "scene:show()"
@@ -178,6 +196,8 @@ function scene:show(event)
    local phase = event.phase
  
    if phase == "did" then
+      ads.show("banner", { x = 0, y = display.contentHeight, testMode = false })
+
       audio.play(sounds["gameOver"])
       parallax.start()
    end
