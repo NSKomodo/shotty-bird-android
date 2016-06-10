@@ -21,6 +21,40 @@ local zLayer4 = display.newGroup()
 local zLayer5 = display.newGroup()
 local zLayer6 = display.newGroup()
 
+local strokeText = require("com.ponywolf.strokeText")
+local textOptions = {
+   text = "0",
+   x = display.contentWidth - 10,
+   y = 20,
+   font = "assets/fonts/Kenney-Bold.ttf",
+   fontSize = 17,
+   align = "right",
+   color = { 1,1,1,1 },
+   strokeColor = { 0, 0, 0, 1 },
+   strokeWidth = 1.5
+}
+
+local life1 = nil
+local death1 = nil
+
+local life2 = nil
+local death2 = nil
+
+local life3 = nil
+local death3 = nil
+
+local unmuteButton = nil
+local muteButton = nil
+
+local birdSheetInfo = require("birdSheet")
+local birdImageSheet = graphics.newImageSheet("assets/birds/birdSheet.png", birdSheetInfo:getSheet())
+
+local missileSheetInfo = require("missileSheet")
+local missileImageSheet = graphics.newImageSheet("assets/missile/missileSheet.png", missileSheetInfo:getSheet())
+
+local explosionSheetInfo = require("explosionSheet")
+local explosionImageSheet = graphics.newImageSheet("assets/explosion/explosionSheet.png", explosionSheetInfo:getSheet())
+
 local lastUpdateTime = 0.0
 local lastSpawnTime = 0.0
 local lastShotFiredTime = 0.0
@@ -37,14 +71,17 @@ local sounds = {
    explosion = audio.loadSound("sounds/explosion.mp3")
 }
 
-local birdSheetInfo = require("birdSheet")
-local birdImageSheet = graphics.newImageSheet("assets/birds/birdSheet.png", birdSheetInfo:getSheet())
+local function handleMuteButton(tap)
+   audio.setVolume(0.0)
+   muteButton.isVisible = false
+   unmuteButton.isVisible = true
+end
 
-local missileSheetInfo = require("missileSheet")
-local missileImageSheet = graphics.newImageSheet("assets/missile/missileSheet.png", missileSheetInfo:getSheet())
-
-local explosionSheetInfo = require("explosionSheet")
-local explosionImageSheet = graphics.newImageSheet("assets/explosion/explosionSheet.png", explosionSheetInfo:getSheet())
+local function handleUnmuteButton(tap)
+   audio.setVolume(1.0)
+   unmuteButton.isVisible = false
+   muteButton.isVisible = true
+end
 
 local function spawnBird()
    math.randomseed(os.time())
@@ -95,7 +132,19 @@ local function spawnBird()
       -- TODO: update life nodes with skulls
       lives = lives - 1
 
+      if lives == 2 then
+         life1.isVisible = false
+         death1.isVisible = true
+      elseif lives == 1 then
+         life2.isVisible = false
+         death2.isVisible = true
+      end
+
+
       if lives == 0 then
+         life3.isVisible = false
+         death3.isVisible = true
+
          transition.cancel()
          composer.gotoScene("gameOverScene", { effect = "crossFade", time = 200, params = { parallaxIndex = parallax.currentIndex, score = score } })
          composer.removeScene("gameScene")
@@ -178,6 +227,12 @@ local function validateCollision(missile)
 
                      explode(xPos, yPos, 0.35, 0.35, zLayer4)
                      score = score + 1
+                     
+                     if score == 10 or score == 20 or score == 100 or score == 200 or score == 1000 or score == 2000 then
+                        scoreText.x = scoreText.x - 5
+                     end
+                     
+                     scoreText:update(tostring(score))
                      return
                   end
                end
@@ -198,6 +253,12 @@ local function validateCollision(missile)
 
                      explode(xPos, yPos, 0.25, 0.25, zLayer3)
                      score = score + 1
+
+                     if score == 10 or score == 20 or score == 100 or score == 200 or score == 1000 or score == 2000 then
+                        scoreText.x = scoreText.x - 5
+                     end
+
+                     scoreText:update(tostring(score))
                      return
                   end
                end
@@ -218,6 +279,12 @@ local function validateCollision(missile)
 
                      explode(xPos, yPos, 0.2, 0.2, zLayer2)
                      score = score + 1
+
+                     if score == 10 or score == 20 or score == 100 or score == 200 or score == 1000 or score == 2000 then
+                        scoreText.x = scoreText.x - 5
+                     end
+
+                     scoreText:update(tostring(score))
                      return
                   end
                end
@@ -237,6 +304,12 @@ local function validateCollision(missile)
 
                      explode(xPos, yPos, 0.15, 0.15, zLayer1)
                      score = score + 1
+
+                     if score == 10 or score == 20 or score == 100 or score == 200 or score == 1000 or score == 2000 then
+                        scoreText.x = scoreText.x - 5
+                     end
+
+                     scoreText:update(tostring(score))
                      return
                   end
                end
@@ -278,6 +351,7 @@ local function shoot(tap)
    zLayer5:insert(missile)
 
    transition.to(missile, { time = 200, xScale = 0.5, yScale = 0.5, onComplete = validateCollision })
+   return
 end
 
 local function update(event)
@@ -314,6 +388,70 @@ function scene:create(event)
    sceneGroup:insert(zLayer4)
    sceneGroup:insert(zLayer5)
    sceneGroup:insert(zLayer6)
+
+   life1 = display.newImage("assets/gameplay/life.png")
+   life1:scale(0.5, 0.5)
+   life1.x = 20
+   life1.y = 20
+   zLayer6:insert(life1)
+
+   death1 = display.newImage("assets/gameplay/death.png")
+   death1:scale(life1.xScale, life1.yScale)
+   death1.x = life1.x
+   death1.y = life1.y
+   death1.isVisible = false
+   zLayer6:insert(death1)
+
+   life2 = display.newImage("assets/gameplay/life.png")
+   life2:scale(0.5, 0.5)
+   life2.x = life1.x + life2.contentWidth + 2.5
+   life2.y = life1.y
+   zLayer6:insert(life2)
+
+   death2 = display.newImage("assets/gameplay/death.png")
+   death2:scale(life2.xScale, life2.yScale)
+   death2.x = life2.x
+   death2.y = life2.y
+   death2.isVisible = false
+   zLayer6:insert(death2)
+
+   life3 = display.newImage("assets/gameplay/life.png")
+   life3:scale(0.5, 0.5)
+   life3.x = life2.x + life3.contentWidth + 2.5
+   life3.y = life2.y
+   zLayer6:insert(life3)
+
+   death3 = display.newImage("assets/gameplay/death.png")
+   death3:scale(life3.xScale, life3.yScale)
+   death3.x = life3.x
+   death3.y = life3.y
+   death3.isVisible = false
+   zLayer6:insert(death3)
+
+   unmuteButton = display.newImage("assets/unmute_button.png")
+   unmuteButton:scale(0.5, 0.5)
+   unmuteButton.x = display.contentWidth - 25
+   unmuteButton.y = display.contentHeight - 25
+   unmuteButton:addEventListener("tap", handleUnmuteButton)
+   zLayer6:insert(unmuteButton) 
+
+   muteButton = display.newImage("assets/mute_button.png")
+   muteButton:scale(0.5, 0.5)
+   muteButton.x = unmuteButton.x
+   muteButton.y = unmuteButton.y
+   muteButton:addEventListener("tap", handleMuteButton)
+   zLayer6:insert(muteButton)
+
+   if audio.getVolume() == 0 then
+      unmuteButton.isVisible = true
+      muteButton.isVisible = false
+   else
+      unmuteButton.isVisible = false
+      muteButton.isVisible = true
+   end
+
+   scoreText = strokeText.new(textOptions)
+   zLayer6:insert(scoreText)
 end
 
 -- "scene:show()"
