@@ -44,9 +44,26 @@ local textOptions = {
    strokeWidth = 3
 }
 
+-- AdMob
+local ads = require("ads")
+local adUnit = "ca-app-pub-5774553422556987/6814602958"
+local adProvider = "admob"
+
+local function adListener( event )
+   local msg = event.response
+   print("Message from the ads library: ", msg)
+ 
+   if (event.isError ) then
+      print("Error, no ad received", msg)
+   else
+      print("Ad loaded...")
+   end
+end
+
 local function handleBackButton(tap)
    local function gotoMainMenu(event)
       if event.completed then
+         ads.hide()
          composer.gotoScene("mainMenuScene", { effect = "crossFade", time = 500 })
          composer.removeScene("gameOverScene")
       end
@@ -58,6 +75,7 @@ end
 local function handlePlayButton(tap)
    local function gotoGame(event)
       if event.completed then
+         ads.hide()
          composer.gotoScene("gameScene", { effect = "crossFade", time = 500, params = { parallaxIndex = parallax.currentIndex } })
          composer.removeScene("gameOverScene")
       end
@@ -113,22 +131,6 @@ local function handleShareButton(tap)
    end
 
    audio.play(sounds["screenshot"], { onComplete = share })
-end
-
--- AdMob
-local ads = require("ads")
-local adUnit = "ca-app-pub-5774553422556987/6814602958"
-local adProvider = "admob"
-
-local function adListener( event )
-   local msg = event.response
-   print( "Message from the ads library: ", msg )
- 
-   if (event.isError ) then
-      print("Error, no ad received", msg)
-   else
-      print("Ah ha! Got one!")
-   end
 end
 
 -- "scene:create()"
