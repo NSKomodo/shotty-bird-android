@@ -35,6 +35,7 @@ settings =
 			"android.permission.ACCESS_NETWORK_STATE",
 			"android.permission.WRITE_EXTERNAL_STORAGE",
 		},
+		googlePlayGamesAppId = "730809637759",
 	},
 
 	--
@@ -51,6 +52,11 @@ settings =
         {
             publisherId = "com.coronalabs"
         },
+
+        ["CoronaProvider.gameNetwork.google"] =
+        {
+        	publisherId = "com.coronalabs",
+	   	},
     },
 
 }

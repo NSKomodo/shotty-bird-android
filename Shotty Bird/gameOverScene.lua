@@ -84,6 +84,11 @@ local function handlePlayButton(tap)
    audio.play(sounds["explosion"], { onComplete = gotoGame })
 end
 
+local function handleLeaderboardButton(tap)
+   audio.play(sounds["bird"])
+   gameNetwork.show("leaderboards")
+end
+
 local function handleShareButton(tap)
    local function share(event)
       if event.completed then
@@ -160,8 +165,12 @@ function scene:create(event)
 
    if score == 0 then
       bestText.text = "Time your shots and try again"
+   elseif score > highestScore then
+      bestText.text = "NEW RECORD"
+
+
    else
-      bestText.text = "Your best is " .. score
+      bestText.text = "Your best is " .. highestScore
    end
 
    gameOver = display.newImage("assets/game_over/game_over.png", display.contentCenterX, panel.contentHeight / 2 + 20)
@@ -171,6 +180,7 @@ function scene:create(event)
    leaderboardButton = display.newImage("assets/game_over/leaderboard_button_icon.png", display.contentCenterX, panel.y + panel.contentHeight / 2 + 22)
    leaderboardButton.x = leaderboardButton.x + leaderboardButton.contentWidth / 4 + 1.25
    leaderboardButton:scale(0.5, 0.5)
+   leaderboardButton:addEventListener("tap", handleLeaderboardButton)
    sceneGroup:insert(leaderboardButton)
 
    playButton = display.newImage("assets/game_over/replay_button.png", leaderboardButton.x - leaderboardButton.width / 2 - 5, leaderboardButton.y)
