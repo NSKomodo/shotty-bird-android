@@ -93,7 +93,7 @@ local function handleShareButton(tap)
    local function share(event)
       if event.completed then
          local serviceName = tap.target.serviceName
-         local isAvailable = native.canShowPopup( "social", serviceName )
+         local isAvailable = native.canShowPopup("social", serviceName)
        
          -- If it is possible to show the popup
          if isAvailable then
@@ -116,7 +116,7 @@ local function handleShareButton(tap)
             display.save(sceneGroup, { filename = "score.png", baseDir = system.TemporaryDirectory, isFullResolution = false })
        
             -- Show the popup
-            native.showPopup( "social",
+            native.showPopup("social",
             {
                service = serviceName, -- The service key is ignored on Android.
                message = "I just shot down " .. score .. " " .. birdText .. " in @shottybird. Download now for FREE. #happyhunting",
@@ -158,7 +158,6 @@ function scene:create(event)
    scoreText:update(tostring(score))
    sceneGroup:insert(scoreText)
 
-   -- TODO: validate best score, new record and 0
    bestText = display.newText("", display.contentCenterX + 2, display.contentCenterY + 42, "assets/fonts/Kenney-Bold.ttf", 9)
    bestText:setFillColor(205 / 255, 164 / 255, 0)
    sceneGroup:insert(bestText)
@@ -218,40 +217,52 @@ function scene:create(event)
       })
    else
       -- Getting Started
-      gameNetwork.request("unlockAchievement",
-      {
-         achievement = { identifier = "CgkI_7aYvaIVEAIQAg", percentComplete = score * 100 / 50, showsCompletionBanner = true }
-      })
+      if score >= 50 then
+         gameNetwork.request("unlockAchievement",
+         {
+            achievement = { identifier = "CgkI_7aYvaIVEAIQAg", percentComplete = 100, showsCompletionBanner = true }
+         })
+      end
 
       -- Warming UP
-      gameNetwork.request("unlockAchievement",
-      {
-         achievement = { identifier = "CgkI_7aYvaIVEAIQAw", percentComplete = score * 100 / 100, showsCompletionBanner = true }
-      })
+      if score >= 100 then
+         gameNetwork.request("unlockAchievement",
+         {
+            achievement = { identifier = "CgkI_7aYvaIVEAIQAw", percentComplete = 100, showsCompletionBanner = true }
+         })
+      end
 
       -- Ordnance Adept
-      gameNetwork.request("unlockAchievement",
-      {
-         achievement = { identifier = "CgkI_7aYvaIVEAIQBA", percentComplete = score * 100 / 150, showsCompletionBanner = true }
-      })
+      if score >= 150 then
+         gameNetwork.request("unlockAchievement",
+         {
+            achievement = { identifier = "CgkI_7aYvaIVEAIQBA", percentComplete = 100, showsCompletionBanner = true }
+         })
+      end
 
       -- Road to Perfection
-      gameNetwork.request("unlockAchievement",
-      {
-         achievement = { identifier = "CgkI_7aYvaIVEAIQBQ", percentComplete = score * 100 / 200, showsCompletionBanner = true }
-      })
+      if score >= 200 then
+         gameNetwork.request("unlockAchievement",
+         {
+            achievement = { identifier = "CgkI_7aYvaIVEAIQBQ", percentComplete = score * 100 / 200, showsCompletionBanner = true }
+         })
+      end
 
       -- Professional Shooter
-      gameNetwork.request("unlockAchievement",
-      {
-         achievement = { identifier = "CgkI_7aYvaIVEAIQBg", percentComplete = score * 100 / 250, showsCompletionBanner = true }
-      })
+      if score >= 250 then
+         gameNetwork.request("unlockAchievement",
+         {
+            achievement = { identifier = "CgkI_7aYvaIVEAIQBg", percentComplete = score * 100 / 250, showsCompletionBanner = true }
+         })
+      end
 
       -- Supreme Slayer
-      gameNetwork.request("unlockAchievement",
-      {
-         achievement = { identifier = "CgkI_7aYvaIVEAIQBw", percentComplete = score * 100 / 300, showsCompletionBanner = true }
-      })
+      if score >= 300 then
+         gameNetwork.request("unlockAchievement",
+         {
+            achievement = { identifier = "CgkI_7aYvaIVEAIQBw", percentComplete = score * 100 / 300, showsCompletionBanner = true }
+         })
+      end
 
       -- Out of this World
       if score >= 500 then
