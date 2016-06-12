@@ -8,7 +8,7 @@
 --
 -----------------------------------------------------------------------------------------
 
-local composer = require( "composer" )
+local composer = require("composer")
 local scene = composer.newScene()
 
 local parallax = require("parallax")
@@ -129,7 +129,6 @@ local function spawnBird()
       bird:removeSelf()
       bird = nil
 
-      -- TODO: update life nodes with skulls
       lives = lives - 1
 
       if lives == 2 then
@@ -139,7 +138,6 @@ local function spawnBird()
          life2.isVisible = false
          death2.isVisible = true
       end
-
 
       if lives == 0 then
          life3.isVisible = false
@@ -151,10 +149,11 @@ local function spawnBird()
       end
    end
 
-   local speed = math.random(3, 6)
+   math.randomseed(os.time())
+   local speed = math.random(2500, 5500)
    bird.speed = speed
 
-   transition.to(bird, { time = speed * 1000, x = -(bird.contentWidth / 2), y = bird.y, onComplete = removeBird })
+   transition.to(bird, { time = speed, x = -(bird.contentWidth / 2), y = bird.y, onComplete = removeBird })
    audio.play(sounds["flap"])
 end
 
@@ -298,6 +297,13 @@ local function validateCollision(missile)
                   if hasCollided(missile, zLayer1[i]) then
                      audio.play(sounds["explosion"])
 
+                     if zLayer1[i].speed == 2500 then
+                        gameNetwork.request("unlockAchievement",
+                        {
+                           achievement = { identifier = "CgkI_7aYvaIVEAIQCQ", percentComplete = 100, showsCompletionBanner = true }
+                        })
+                     end
+
                      missile:removeSelf()
                      transition.cancel(zLayer1[i])
                      zLayer1[i]:removeSelf()
@@ -365,9 +371,96 @@ local function update(event)
    lastSpawnTime = lastSpawnTime + timeSinceLast
 
    -- TODO: increase difficulty based on score
-   if lastSpawnTime > 2200 then
-      spawnBird()
-      lastSpawnTime = 0.0
+   if score <= 10 then
+      if lastSpawnTime > 2200 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   elseif score > 10 and score <= 20 then
+      if lastSpawnTime > 2000 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   elseif score > 20 and score <= 25 then
+      if lastSpawnTime > 1800 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   elseif score > 25 and score <= 35 then
+      if lastSpawnTime > 1600 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   elseif score > 35 and score <= 40 then
+      if lastSpawnTime > 1400 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   elseif score > 40 and score <= 45 then
+      if lastSpawnTime > 1350 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   elseif score > 45 and score <= 50 then
+      if lastSpawnTime > 1300 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   elseif score > 50 and score <= 55 then
+      if lastSpawnTime > 1250 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   elseif score > 55 and score <= 60 then
+      if lastSpawnTime > 1200 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   elseif score > 60 and score <= 65 then
+      if lastSpawnTime > 1150 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   elseif score > 65 and score <= 70 then
+      if lastSpawnTime > 1100 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   elseif score > 70 and score <= 80 then
+      if lastSpawnTime > 1050 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   elseif score > 80 and score <= 90 then
+      if lastSpawnTime > 1000 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   elseif score > 90 and score <= 100 then
+      if lastSpawnTime > 900 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   elseif score > 100 and score <= 110 then
+      if lastSpawnTime > 800 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   elseif score > 110 and score <= 120 then
+      if lastSpawnTime > 750 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   elseif score > 120 and score <= 320 then
+      if lastSpawnTime > 700 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   else
+      if lastSpawnTime > 650 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
    end
 end
 

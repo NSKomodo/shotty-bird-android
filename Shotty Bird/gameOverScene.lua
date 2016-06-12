@@ -8,7 +8,7 @@
 --
 -----------------------------------------------------------------------------------------
 
-local composer = require( "composer" )
+local composer = require("composer")
 local scene = composer.newScene()
  
 local parallax = require("parallax")
@@ -208,6 +208,59 @@ function scene:create(event)
    sceneGroup:insert(shareButton)
 
    ads.init(adProvider, adUnit, adListener)
+
+   -- Report achievements
+   -- Welcome to Sniper School
+   if score == 0 then
+      gameNetwork.request("unlockAchievement",
+      {
+         achievement = { identifier = "CgkI_7aYvaIVEAIQCg", percentComplete = 100, showsCompletionBanner = true }
+      })
+   else
+      -- Getting Started
+      gameNetwork.request("unlockAchievement",
+      {
+         achievement = { identifier = "CgkI_7aYvaIVEAIQAg", percentComplete = score * 100 / 50, showsCompletionBanner = true }
+      })
+
+      -- Warming UP
+      gameNetwork.request("unlockAchievement",
+      {
+         achievement = { identifier = "CgkI_7aYvaIVEAIQAw", percentComplete = score * 100 / 100, showsCompletionBanner = true }
+      })
+
+      -- Ordnance Adept
+      gameNetwork.request("unlockAchievement",
+      {
+         achievement = { identifier = "CgkI_7aYvaIVEAIQBA", percentComplete = score * 100 / 150, showsCompletionBanner = true }
+      })
+
+      -- Road to Perfection
+      gameNetwork.request("unlockAchievement",
+      {
+         achievement = { identifier = "CgkI_7aYvaIVEAIQBQ", percentComplete = score * 100 / 200, showsCompletionBanner = true }
+      })
+
+      -- Professional Shooter
+      gameNetwork.request("unlockAchievement",
+      {
+         achievement = { identifier = "CgkI_7aYvaIVEAIQBg", percentComplete = score * 100 / 250, showsCompletionBanner = true }
+      })
+
+      -- Supreme Slayer
+      gameNetwork.request("unlockAchievement",
+      {
+         achievement = { identifier = "CgkI_7aYvaIVEAIQBw", percentComplete = score * 100 / 300, showsCompletionBanner = true }
+      })
+
+      -- Out of this World
+      if score >= 500 then
+         gameNetwork.request("unlockAchievement",
+         {
+            achievement = { identifier = "CgkI_7aYvaIVEAIQCA", percentComplete = 100, showsCompletionBanner = true }
+         })
+      end
+   end
 end
  
 -- "scene:show()"

@@ -8,7 +8,7 @@
 --
 -----------------------------------------------------------------------------------------
 
-local composer = require( "composer" )
+local composer = require("composer")
 local scene = composer.newScene()
 
 local parallax = require("parallax")
