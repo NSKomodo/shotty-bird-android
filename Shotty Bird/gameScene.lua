@@ -149,7 +149,7 @@ local function spawnBird()
       end
    end
 
-   local speed = math.random(2500, 5500)
+   local speed = math.random(2500, 4000)
    bird.speed = speed
 
    transition.to(bird, { time = speed, x = -(bird.contentWidth / 2), y = bird.y, onComplete = removeBird })
@@ -356,7 +356,6 @@ local function shoot(tap)
    zLayer5:insert(missile)
 
    transition.to(missile, { time = 200, xScale = 0.5, yScale = 0.5, onComplete = validateCollision })
-   return
 end
 
 local function update(event)
@@ -369,7 +368,6 @@ local function update(event)
 
    lastSpawnTime = lastSpawnTime + timeSinceLast
 
-   -- TODO: increase difficulty based on score
    if score <= 10 then
       if lastSpawnTime > 2200 then
          spawnBird()
@@ -384,7 +382,6 @@ local function update(event)
       if lastSpawnTime > 1800 then
          spawnBird()
          lastSpawnTime = 0.0
-         al.Source(musicSource, al.PITCH, 1.05)
       end
    elseif score > 25 and score <= 35 then
       if lastSpawnTime > 1600 then
@@ -397,74 +394,69 @@ local function update(event)
          lastSpawnTime = 0.0
       end
    elseif score > 40 and score <= 45 then
-      if lastSpawnTime > 1350 then
-         spawnBird()
-         lastSpawnTime = 0.0
-         al.Source(musicSource, al.PITCH, 1.1)
-      end
-   elseif score > 45 and score <= 50 then
-      if lastSpawnTime > 1300 then
-         spawnBird()
-         lastSpawnTime = 0.0
-      end
-   elseif score > 50 and score <= 55 then
-      if lastSpawnTime > 1250 then
-         spawnBird()
-         lastSpawnTime = 0.0
-      end
-   elseif score > 55 and score <= 60 then
       if lastSpawnTime > 1200 then
          spawnBird()
          lastSpawnTime = 0.0
       end
-   elseif score > 60 and score <= 65 then
+   elseif score > 45 and score <= 50 then
       if lastSpawnTime > 1150 then
          spawnBird()
          lastSpawnTime = 0.0
-         al.Source(musicSource, al.PITCH, 1.15)
       end
-   elseif score > 65 and score <= 70 then
+   elseif score > 50 and score <= 55 then
       if lastSpawnTime > 1100 then
          spawnBird()
          lastSpawnTime = 0.0
       end
-   elseif score > 70 and score <= 80 then
+   elseif score > 55 and score <= 60 then
       if lastSpawnTime > 1050 then
          spawnBird()
          lastSpawnTime = 0.0
       end
-   elseif score > 80 and score <= 90 then
+   elseif score > 60 and score <= 65 then
       if lastSpawnTime > 1000 then
          spawnBird()
          lastSpawnTime = 0.0
       end
-   elseif score > 90 and score <= 100 then
+   elseif score > 65 and score <= 70 then
+      if lastSpawnTime > 950 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   elseif score > 70 and score <= 80 then
       if lastSpawnTime > 900 then
          spawnBird()
          lastSpawnTime = 0.0
-         al.Source(musicSource, al.PITCH, 1.2)
       end
-   elseif score > 100 and score <= 110 then
+   elseif score > 80 and score <= 90 then
+      if lastSpawnTime > 850 then
+         spawnBird()
+         lastSpawnTime = 0.0
+      end
+   elseif score > 90 and score <= 100 then
       if lastSpawnTime > 800 then
          spawnBird()
          lastSpawnTime = 0.0
       end
-   elseif score > 110 and score <= 120 then
+   elseif score > 100 and score <= 110 then
       if lastSpawnTime > 750 then
          spawnBird()
          lastSpawnTime = 0.0
       end
-   elseif score > 120 and score <= 320 then
+   elseif score > 110 and score <= 120 then
       if lastSpawnTime > 700 then
          spawnBird()
          lastSpawnTime = 0.0
-         al.Source(musicSource, al.PITCH, 1.25)
       end
-   else
+   elseif score > 120 and score <= 320 then
       if lastSpawnTime > 650 then
          spawnBird()
          lastSpawnTime = 0.0
-         al.Source(musicSource, al.PITCH, 1.3)
+      end
+   else
+      if lastSpawnTime > 600 then
+         spawnBird()
+         lastSpawnTime = 0.0
       end
    end
 end

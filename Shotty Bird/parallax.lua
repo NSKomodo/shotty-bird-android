@@ -11,8 +11,8 @@ local P = {}
 P.ready = false
 P.currentIndex = 0
 
-local gameSpeed = 12.0
-local menuSpeed = 2.0
+local gameSpeed = 6.0
+local menuSpeed = 1.0
 local gameplay = false
 
 -- TODO: add all backgrounds
@@ -20,7 +20,10 @@ local backgrounds = {
 	{ "assets/bgs/bg1/bg1_layer5.png", "assets/bgs/bg1/bg1_layer4.png", "assets/bgs/bg1/bg1_layer3.png", "assets/bgs/bg1/bg1_layer2.png", "assets/bgs/bg1/bg1_layer1.png" },
 	{ "assets/bgs/bg2/bg2_layer5.png", "assets/bgs/bg2/bg2_layer4.png", "assets/bgs/bg2/bg2_layer3.png", "assets/bgs/bg2/bg2_layer2.png", "assets/bgs/bg2/bg2_layer1.png" },
 	{ "assets/bgs/bg3/bg3_layer5.png", "assets/bgs/bg3/bg3_layer4.png", "assets/bgs/bg3/bg3_layer3.png", "assets/bgs/bg3/bg3_layer2.png", "assets/bgs/bg3/bg3_layer1.png" },
-	{ "assets/bgs/bg8/bg8_layer5.png", "assets/bgs/bg8/bg8_layer4.png", "assets/bgs/bg8/bg8_layer3.png", "assets/bgs/bg8/bg8_layer2.png", "assets/bgs/bg8/bg8_layer1.png" },
+	{ "assets/bgs/bg4/bg4_layer5.png", "assets/bgs/bg4/bg4_layer4.png", "assets/bgs/bg4/bg4_layer3.png", "assets/bgs/bg4/bg4_layer2.png", "assets/bgs/bg4/bg4_layer1.png" },
+	{ "assets/bgs/bg5/bg5_layer5.png", "assets/bgs/bg5/bg5_layer4.png", "assets/bgs/bg5/bg5_layer3.png", "assets/bgs/bg5/bg5_layer2.png", "assets/bgs/bg5/bg5_layer1.png" },
+	{ "assets/bgs/bg6/bg6_layer5.png", "assets/bgs/bg6/bg6_layer4.png", "assets/bgs/bg6/bg6_layer3.png", "assets/bgs/bg6/bg6_layer2.png", "assets/bgs/bg6/bg6_layer1.png" },
+	--{ "assets/bgs/bg0/bg0_layer5.png", "assets/bgs/bg0/bg0_layer4.png", "assets/bgs/bg0/bg0_layer3.png", "assets/bgs/bg0/bg0_layer2.png", "assets/bgs/bg0/bg0_layer1.png" },
 }
 
 local function scroll(layer, event)
@@ -29,15 +32,15 @@ local function scroll(layer, event)
 	else
 		if (gameplay) then
 			if layer.speed == gameSpeed then
-				layer.x = -(layer.contentWidth - 28)
-			elseif layer.speed == 9 then
-				layer.x = -(layer.contentWidth - 15)
-			elseif layer.speed == 6 then
-				layer.x = -(layer.contentWidth - 13)
+				layer.x = -(layer.contentWidth - 10)
 			elseif layer.speed == 4 then
-				layer.x = -(layer.contentWidth - 7)
+				layer.x = -(layer.contentWidth - 6)
 			elseif layer.speed == 2 then
-				layer.x = -(layer.contentWidth - 7)
+				layer.x = -(layer.contentWidth - 3)
+			elseif layer.speed == 1 then
+				layer.x = -(layer.contentWidth - 3)
+			elseif layer.speed == 0.5 then
+				layer.x = -(layer.contentWidth - 3)
 			end
 		else
 			layer.x = -(layer.contentWidth - 3)
@@ -91,16 +94,16 @@ function P.init(sceneGroup, forGameplay, bgIndex)
 		local speed1 = 0.0
 
 		if forGameplay then
-			speed5 = 2
-			speed4 = 4
-			speed3 = 6
-			speed2 = 9
+			speed5 = 0.5
+			speed4 = 1
+			speed3 = 2
+			speed2 = 4
 			speed1 = gameSpeed
 		else
 			speed5 = 0.1
-			speed4 = 0.25
-			speed3 = 0.75
-			speed2 = 1.0
+			speed4 = 0.2525
+			speed3 = 0.505
+			speed2 = 0.7575
 			speed1 = menuSpeed
 		end
 

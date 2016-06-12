@@ -56,6 +56,7 @@ settings =
         ["CoronaProvider.gameNetwork.google"] =
         {
         	publisherId = "com.coronalabs",
+        	supportedPlatforms = { iphone = false, android = true }
 	   	},
     },
 
