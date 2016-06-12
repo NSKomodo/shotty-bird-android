@@ -22,6 +22,7 @@ local sounds = {
 local logo = nil
 local playButton = nil
 local leaderboardButton = nil
+local achievementsButton = nil
 local creditsButton = nil
 local twitterButton = nil
 local facebookButton = nil
@@ -36,6 +37,11 @@ end
 local function handleLeaderboardButton(tap)
    audio.play(sounds["bird"])
    gameNetwork.show("leaderboards")
+end
+
+local function handleAchievementsButton(tap)
+   audio.play(sounds["bird"])
+   gameNetwork.show("achievements")
 end
 
 local function handleCreditsButton(tap)
@@ -96,10 +102,17 @@ function scene:create( event )
    leaderboardButton:addEventListener("tap", handleLeaderboardButton)
    zLayer0:insert(leaderboardButton)
 
+   achievementsButton = display.newImage("assets/main_menu/achievements_button.png")
+   achievementsButton:scale(0.4, 0.4)
+   achievementsButton.x = display.contentWidth / 2
+   achievementsButton.y =  5 + leaderboardButton.y + achievementsButton.contentHeight
+   achievementsButton:addEventListener("tap", handleAchievementsButton)
+   zLayer0:insert(achievementsButton)
+
    creditsButton = display.newImage("assets/main_menu/credits_button.png")
    creditsButton:scale(0.4, 0.4)
    creditsButton.x = display.contentWidth / 2
-   creditsButton.y =  5 + leaderboardButton.y + creditsButton.contentHeight
+   creditsButton.y =  5 + achievementsButton.y + creditsButton.contentHeight
    creditsButton:addEventListener("tap", handleCreditsButton)
    zLayer0:insert(creditsButton)
 

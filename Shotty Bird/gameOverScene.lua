@@ -168,7 +168,15 @@ function scene:create(event)
    elseif score > highestScore then
       bestText.text = "NEW RECORD"
 
+      local function handlePostHighScore(event)
+         print("Highest score successfully post with value: " .. event.data[1].value)
+         return true
+      end
 
+      gameNetwork.request("setHighScore",
+      {
+         localPlayerScore = { category = "CgkI_7aYvaIVEAIQAQ", value = tonumber(score), listener = handlePostHighScore }
+      })
    else
       bestText.text = "Your best is " .. highestScore
    end
