@@ -84,7 +84,7 @@ local function handleUnmuteButton(tap)
 end
 
 local function spawnBird()
-   math.randomseed(os.time())
+   math.randomseed(system.getTimer())
    local zPosition = math.random(1, 4)
 
    local birds = { 1, 3, 5, 7, 9, 11 }
@@ -149,7 +149,6 @@ local function spawnBird()
       end
    end
 
-   math.randomseed(os.time())
    local speed = math.random(2500, 5500)
    bird.speed = speed
 
@@ -385,6 +384,7 @@ local function update(event)
       if lastSpawnTime > 1800 then
          spawnBird()
          lastSpawnTime = 0.0
+         al.Source(musicSource, al.PITCH, 1.05)
       end
    elseif score > 25 and score <= 35 then
       if lastSpawnTime > 1600 then
@@ -400,6 +400,7 @@ local function update(event)
       if lastSpawnTime > 1350 then
          spawnBird()
          lastSpawnTime = 0.0
+         al.Source(musicSource, al.PITCH, 1.1)
       end
    elseif score > 45 and score <= 50 then
       if lastSpawnTime > 1300 then
@@ -420,6 +421,7 @@ local function update(event)
       if lastSpawnTime > 1150 then
          spawnBird()
          lastSpawnTime = 0.0
+         al.Source(musicSource, al.PITCH, 1.15)
       end
    elseif score > 65 and score <= 70 then
       if lastSpawnTime > 1100 then
@@ -440,6 +442,7 @@ local function update(event)
       if lastSpawnTime > 900 then
          spawnBird()
          lastSpawnTime = 0.0
+         al.Source(musicSource, al.PITCH, 1.2)
       end
    elseif score > 100 and score <= 110 then
       if lastSpawnTime > 800 then
@@ -455,11 +458,13 @@ local function update(event)
       if lastSpawnTime > 700 then
          spawnBird()
          lastSpawnTime = 0.0
+         al.Source(musicSource, al.PITCH, 1.25)
       end
    else
       if lastSpawnTime > 650 then
          spawnBird()
          lastSpawnTime = 0.0
+         al.Source(musicSource, al.PITCH, 1.3)
       end
    end
 end

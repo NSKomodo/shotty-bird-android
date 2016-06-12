@@ -29,6 +29,8 @@ local facebookButton = nil
 local unmuteButton = nil
 local muteButton = nil
 
+musicChannel, musicSource = nil, nil
+
 local function handlePlayButton(tap)
    composer.gotoScene("tutorialScene", { effect = "crossFade", time = 500, params = { parallaxIndex = parallax.currentIndex } })
    composer.removeScene("mainMenuScene")
@@ -160,7 +162,7 @@ function scene:show(event)
 
    if phase == "did" then
       parallax.start()
-      audio.play(music, { loops = -1 })
+      musicChannel, musicSource = audio.play(music, { loops = -1 })
    end
 end
 

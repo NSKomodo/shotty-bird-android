@@ -282,7 +282,9 @@ function scene:show(event)
    if phase == "did" then
       ads.show("banner", { x = 0, y = display.contentHeight, testMode = false })
 
+      al.Source(musicSource, al.PITCH, 1.0)
       audio.play(sounds["gameOver"])
+
       parallax.start()
    end
 end
