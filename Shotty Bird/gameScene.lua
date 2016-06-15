@@ -143,9 +143,13 @@ local function spawnBird()
          life3.isVisible = false
          death3.isVisible = true
 
-         transition.cancel()
-         composer.gotoScene("gameOverScene", { effect = "crossFade", time = 500, params = { parallaxIndex = parallax.currentIndex, score = score } })
-         composer.removeScene("gameScene")
+         local function endGame()
+            transition.cancel()
+            composer.gotoScene("gameOverScene", { effect = "crossFade", time = 500, params = { parallaxIndex = parallax.currentIndex, score = score } })
+            composer.removeScene("gameScene")
+         end
+
+         timer.performWithDelay(500, endGame)
       end
    end
 

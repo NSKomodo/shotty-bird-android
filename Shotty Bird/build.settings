@@ -27,7 +27,7 @@ settings =
 	--
 	android =
 	{
-		minSdkVersion = "14",
+		minSdkVersion = "16",
 		largeHeap = true,
 		usesPermissions =
 		{
