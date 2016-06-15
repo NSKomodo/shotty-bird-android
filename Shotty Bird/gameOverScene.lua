@@ -37,7 +37,7 @@ local textOptions = {
    x = display.contentCenterX + 5,
    y = display.contentCenterY,
    font = "assets/fonts/Kenney-Bold.ttf",
-   fontSize = 40,
+   fontSize = 50,
    align = "center",
    color = { 1,1,1,1 },
    strokeColor = { 0, 0, 0, 1 },
@@ -86,7 +86,7 @@ end
 
 local function handleLeaderboardButton(tap)
    audio.play(sounds["bird"])
-   gameNetwork.show("leaderboards")
+   gpgs.gameNetwork.show("leaderboards")
 end
 
 local function handleShareButton(tap)
@@ -149,7 +149,7 @@ function scene:create(event)
    parallax.init(sceneGroup, false, parallaxIndex)
    
    panel = display.newImage("assets/game_over/score_panel.png")
-   panel:scale(0.4, 0.3)
+   panel:scale(0.5, 0.4)
    panel.x = display.contentCenterX
    panel.y = display.contentCenterY
    sceneGroup:insert(panel)
@@ -158,13 +158,13 @@ function scene:create(event)
    scoreText:update(tostring(score))
    sceneGroup:insert(scoreText)
 
-   bestText = display.newText("", display.contentCenterX + 2, display.contentCenterY + 42, "assets/fonts/Kenney-Bold.ttf", 9)
+   bestText = display.newText("", display.contentCenterX + 2, display.contentCenterY + 55, "assets/fonts/Kenney-Bold.ttf", 11)
    bestText:setFillColor(205 / 255, 164 / 255, 0)
    sceneGroup:insert(bestText)
 
    if score == 0 then
       bestText.text = "Time your shots and try again"
-   elseif score > highestScore then
+   elseif score > gpgs.highestScore then
       bestText.text = "NEW RECORD"
 
       local function handlePostHighScore(event)
@@ -172,36 +172,36 @@ function scene:create(event)
          return true
       end
 
-      gameNetwork.request("setHighScore",
+      gpgs.gameNetwork.request("setHighScore",
       {
          localPlayerScore = { category = "CgkI_7aYvaIVEAIQAQ", value = tonumber(score), listener = handlePostHighScore }
       })
    else
-      bestText.text = "Your best is " .. highestScore
+      bestText.text = "Your best is " .. gpgs.highestScore
    end
 
-   gameOver = display.newImage("assets/game_over/game_over.png", display.contentCenterX, panel.contentHeight / 2 + 20)
-   gameOver:scale(0.4, 0.4)
+   gameOver = display.newImage("assets/game_over/game_over.png", display.contentCenterX, panel.contentHeight / 2)
+   gameOver:scale(0.5, 0.5)
    sceneGroup:insert(gameOver)
 
-   leaderboardButton = display.newImage("assets/game_over/leaderboard_button_icon.png", display.contentCenterX, panel.y + panel.contentHeight / 2 + 22)
+   leaderboardButton = display.newImage("assets/game_over/leaderboard_button_icon.png", display.contentCenterX, panel.y + panel.contentHeight / 2 + 28)
    leaderboardButton.x = leaderboardButton.x + leaderboardButton.contentWidth / 4 + 1.25
-   leaderboardButton:scale(0.5, 0.5)
+   leaderboardButton:scale(0.6, 0.6)
    leaderboardButton:addEventListener("tap", handleLeaderboardButton)
    sceneGroup:insert(leaderboardButton)
 
-   playButton = display.newImage("assets/game_over/replay_button.png", leaderboardButton.x - leaderboardButton.width / 2 - 5, leaderboardButton.y)
-   playButton:scale(0.5, 0.5)
+   playButton = display.newImage("assets/game_over/replay_button.png", leaderboardButton.x - leaderboardButton.width / 2 - 12, leaderboardButton.y)
+   playButton:scale(0.6, 0.6)
    playButton:addEventListener("tap", handlePlayButton)
    sceneGroup:insert(playButton)
 
-   backButton = display.newImage("assets/back_button.png", playButton.x - playButton.width / 2 - 5, leaderboardButton.y)
-   backButton:scale(0.5, 0.5)
+   backButton = display.newImage("assets/back_button.png", playButton.x - playButton.width / 2 - 12, leaderboardButton.y)
+   backButton:scale(0.6, 0.6)
    backButton:addEventListener("tap", handleBackButton)
    sceneGroup:insert(backButton)
 
-   shareButton = display.newImage("assets/game_over/share_button.png", leaderboardButton.x + leaderboardButton.width / 2 + 5, leaderboardButton.y)
-   shareButton:scale(0.5, 0.5)
+   shareButton = display.newImage("assets/game_over/share_button.png", leaderboardButton.x + leaderboardButton.width / 2 + 12, leaderboardButton.y)
+   shareButton:scale(0.6, 0.6)
    shareButton.serviceName = "share"
    shareButton:addEventListener("tap", handleShareButton)
    sceneGroup:insert(shareButton)
@@ -211,14 +211,14 @@ function scene:create(event)
    -- Report achievements
    -- Welcome to Sniper School
    if score == 0 then
-      gameNetwork.request("unlockAchievement",
+      gpgs.gameNetwork.request("unlockAchievement",
       {
          achievement = { identifier = "CgkI_7aYvaIVEAIQCg", percentComplete = 100, showsCompletionBanner = true }
       })
    else
       -- Getting Started
       if score >= 50 then
-         gameNetwork.request("unlockAchievement",
+         gpgs.gameNetwork.request("unlockAchievement",
          {
             achievement = { identifier = "CgkI_7aYvaIVEAIQAg", percentComplete = 100, showsCompletionBanner = true }
          })
@@ -226,7 +226,7 @@ function scene:create(event)
 
       -- Warming UP
       if score >= 100 then
-         gameNetwork.request("unlockAchievement",
+         gpgs.gameNetwork.request("unlockAchievement",
          {
             achievement = { identifier = "CgkI_7aYvaIVEAIQAw", percentComplete = 100, showsCompletionBanner = true }
          })
@@ -234,7 +234,7 @@ function scene:create(event)
 
       -- Ordnance Adept
       if score >= 150 then
-         gameNetwork.request("unlockAchievement",
+         gpgs.gameNetwork.request("unlockAchievement",
          {
             achievement = { identifier = "CgkI_7aYvaIVEAIQBA", percentComplete = 100, showsCompletionBanner = true }
          })
@@ -242,7 +242,7 @@ function scene:create(event)
 
       -- Road to Perfection
       if score >= 200 then
-         gameNetwork.request("unlockAchievement",
+         gpgs.gameNetwork.request("unlockAchievement",
          {
             achievement = { identifier = "CgkI_7aYvaIVEAIQBQ", percentComplete = score * 100 / 200, showsCompletionBanner = true }
          })
@@ -250,7 +250,7 @@ function scene:create(event)
 
       -- Professional Shooter
       if score >= 250 then
-         gameNetwork.request("unlockAchievement",
+         gpgs.gameNetwork.request("unlockAchievement",
          {
             achievement = { identifier = "CgkI_7aYvaIVEAIQBg", percentComplete = score * 100 / 250, showsCompletionBanner = true }
          })
@@ -258,7 +258,7 @@ function scene:create(event)
 
       -- Supreme Slayer
       if score >= 300 then
-         gameNetwork.request("unlockAchievement",
+         gpgs.gameNetwork.request("unlockAchievement",
          {
             achievement = { identifier = "CgkI_7aYvaIVEAIQBw", percentComplete = score * 100 / 300, showsCompletionBanner = true }
          })
@@ -266,7 +266,7 @@ function scene:create(event)
 
       -- Out of this World
       if score >= 500 then
-         gameNetwork.request("unlockAchievement",
+         gpgs.gameNetwork.request("unlockAchievement",
          {
             achievement = { identifier = "CgkI_7aYvaIVEAIQCA", percentComplete = 100, showsCompletionBanner = true }
          })

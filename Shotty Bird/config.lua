@@ -8,14 +8,18 @@
 --
 -----------------------------------------------------------------------------------------
 
-local aspectRatio = display.pixelHeight / display.pixelWidth
- 
 application = {
-   content = {
-      width = aspectRatio > 1.5 and 320 or math.floor(480 / aspectRatio),
-      height = aspectRatio < 1.5 and 480 or math.floor(320 * aspectRatio),
-      scale = "letterBox",
+	content = {
+      width = 768,
+      height = 1024,
+      scale = "adaptive",
       fps = 60,
       audioPlayFrequency = 44100,
+
+      imageSuffix =
+      {
+      	["@2x"] = 2.0,
+      	["@3x"] = 3.0,
+      },
    },
 }

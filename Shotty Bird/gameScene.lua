@@ -24,10 +24,10 @@ local zLayer6 = display.newGroup()
 local strokeText = require("com.ponywolf.strokeText")
 local textOptions = {
    text = "0",
-   x = display.contentWidth - 10,
-   y = 20,
+   x = display.contentWidth - 15,
+   y = 25,
    font = "assets/fonts/Kenney-Bold.ttf",
-   fontSize = 17,
+   fontSize = 20,
    align = "right",
    color = { 1,1,1,1 },
    strokeColor = { 0, 0, 0, 1 },
@@ -144,7 +144,7 @@ local function spawnBird()
          death3.isVisible = true
 
          transition.cancel()
-         composer.gotoScene("gameOverScene", { effect = "crossFade", time = 200, params = { parallaxIndex = parallax.currentIndex, score = score } })
+         composer.gotoScene("gameOverScene", { effect = "crossFade", time = 500, params = { parallaxIndex = parallax.currentIndex, score = score } })
          composer.removeScene("gameScene")
       end
    end
@@ -297,7 +297,7 @@ local function validateCollision(missile)
                      audio.play(sounds["explosion"])
 
                      if zLayer1[i].speed == 2500 then
-                        gameNetwork.request("unlockAchievement",
+                        gpgs.gameNetwork.request("unlockAchievement",
                         {
                            achievement = { identifier = "CgkI_7aYvaIVEAIQCQ", percentComplete = 100, showsCompletionBanner = true }
                         })
@@ -480,9 +480,9 @@ function scene:create(event)
    sceneGroup:insert(zLayer6)
 
    life1 = display.newImage("assets/gameplay/life.png")
-   life1:scale(0.5, 0.5)
-   life1.x = 20
-   life1.y = 20
+   life1:scale(0.6, 0.6)
+   life1.x = 25
+   life1.y = 25
    zLayer6:insert(life1)
 
    death1 = display.newImage("assets/gameplay/death.png")
@@ -493,7 +493,7 @@ function scene:create(event)
    zLayer6:insert(death1)
 
    life2 = display.newImage("assets/gameplay/life.png")
-   life2:scale(0.5, 0.5)
+   life2:scale(0.6, 0.6)
    life2.x = life1.x + life2.contentWidth + 2.5
    life2.y = life1.y
    zLayer6:insert(life2)
@@ -506,7 +506,7 @@ function scene:create(event)
    zLayer6:insert(death2)
 
    life3 = display.newImage("assets/gameplay/life.png")
-   life3:scale(0.5, 0.5)
+   life3:scale(0.6, 0.6)
    life3.x = life2.x + life3.contentWidth + 2.5
    life3.y = life2.y
    zLayer6:insert(life3)
@@ -519,14 +519,14 @@ function scene:create(event)
    zLayer6:insert(death3)
 
    unmuteButton = display.newImage("assets/unmute_button.png")
-   unmuteButton:scale(0.5, 0.5)
-   unmuteButton.x = display.contentWidth - 25
-   unmuteButton.y = display.contentHeight - 25
+   unmuteButton:scale(0.6, 0.6)
+   unmuteButton.x = display.contentWidth - 30
+   unmuteButton.y = display.contentHeight - 30
    unmuteButton:addEventListener("tap", handleUnmuteButton)
    zLayer6:insert(unmuteButton) 
 
    muteButton = display.newImage("assets/mute_button.png")
-   muteButton:scale(0.5, 0.5)
+   muteButton:scale(0.6, 0.6)
    muteButton.x = unmuteButton.x
    muteButton.y = unmuteButton.y
    muteButton:addEventListener("tap", handleMuteButton)

@@ -51,23 +51,23 @@ function scene:create( event )
    parallax.start()
 
    itsprof = display.newImage("assets/credits/itsprof.png")
-   itsprof:scale(0.4, 0.4)
+   itsprof:scale(0.5, 0.5)
    itsprof.x = display.contentCenterX
-   itsprof.y = itsprof.height / 2 - 30
+   itsprof.y = display.contentCenterY - itsprof.height / 4 - 15
    itsprof:addEventListener("tap", handleProf)
    sceneGroup:insert(itsprof)
 
    jpalbuja = display.newImage("assets/credits/jpalbuja.png")
-   jpalbuja:scale(0.4, 0.4)
+   jpalbuja:scale(0.5, 0.5)
    jpalbuja.x = display.contentCenterX
-   jpalbuja.y = itsprof.y + jpalbuja.height / 2
+   jpalbuja.y = display.contentCenterY + jpalbuja.height / 4 + 15
    jpalbuja:addEventListener("tap", handleJP)
    sceneGroup:insert(jpalbuja)
 
    backButton = display.newImage("assets/back_button.png")
-   backButton:scale(0.5, 0.5)
-   backButton.x = 25
-   backButton.y = display.contentHeight - 25
+   backButton:scale(0.6, 0.6)
+   backButton.x = 30
+   backButton.y = display.contentHeight - 30
    backButton:addEventListener("tap", handleBackButton)
    sceneGroup:insert(backButton)
 end

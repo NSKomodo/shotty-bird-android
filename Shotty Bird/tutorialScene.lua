@@ -52,7 +52,7 @@ function scene:create(event)
    	parallax.init(sceneGroup, false, parallaxIndex)
    	parallax.start()
 
-	tutorial:scale(0.5, 0.5)
+	tutorial:scale(0.6, 0.6)
 	tutorial.x = display.contentWidth / 2
 	tutorial.y = display.contentHeight / 2
 	sceneGroup:insert(tutorial)
