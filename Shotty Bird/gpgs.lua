@@ -25,7 +25,6 @@ end
  
 local function loadLocalPlayerCallback(event)
    	M.playerName = event.data.alias
-   	print("Logged in to Google Play Games as " .. M.playerName)
    
    	M.gameNetwork.request("loadScores",
    	{

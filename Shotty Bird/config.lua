@@ -8,18 +8,27 @@
 --
 -----------------------------------------------------------------------------------------
 
-application = {
-	content = {
-      width = 768,
-      height = 1024,
-      scale = "adaptive",
-      fps = 60,
-      audioPlayFrequency = 44100,
+--[[
+local dpi = system.getInfo("androidDisplayApproximateDpi")
+local targetFPS = 60
 
-      imageSuffix =
-      {
-      	["@2x"] = 2.0,
-      	["@3x"] = 3.0,
-      },
-   },
+if dpi and dpi < 320 then
+    targetFPS = 30
+end
+]]--
+
+application = {
+    content = {
+        width = 768,
+        height = 1024,
+        scale = "adaptive",
+        fps = 60,
+        audioPlayFrequency = 44100,
+
+        imageSuffix =
+        {
+            ["@2x"] = 1.5,
+            ["@3x"] = 3.0,
+        },
+    },
 }

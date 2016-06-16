@@ -85,8 +85,13 @@ local function handlePlayButton(tap)
 end
 
 local function handleLeaderboardButton(tap)
-   audio.play(sounds["bird"])
-   gpgs.gameNetwork.show("leaderboards")
+   if gpgs.playerName == nil then
+      native.showAlert("Google Play Games", "Please open the Google Play Games app and sign in to your account to access the leaderboard.", { "Dismiss" })
+      return true
+   else
+      audio.play(sounds["bird"])
+      gpgs.gameNetwork.show("leaderboards")
+   end
 end
 
 local function handleShareButton(tap)

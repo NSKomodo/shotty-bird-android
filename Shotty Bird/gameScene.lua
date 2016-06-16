@@ -342,7 +342,10 @@ local function shoot(tap)
    local timeBetween = shotTime - lastShotFiredTime
    lastShotFiredTime = shotTime
 
-   if timeBetween < curentSpawnInterval * 0.25 then
+   print("Time since last touch: " .. timeBetween .. "ms")
+
+   if timeBetween < 175.0 then
+      lastShotFiredTime = system.getTimer()
       return true
    end
 
