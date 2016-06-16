@@ -31,7 +31,7 @@ local textOptions = {
    align = "right",
    color = { 1,1,1,1 },
    strokeColor = { 0, 0, 0, 1 },
-   strokeWidth = 1.5
+   strokeWidth = 2
 }
 
 local life1 = nil
@@ -57,6 +57,7 @@ local explosionImageSheet = graphics.newImageSheet("assets/explosion/explosionSh
 
 local lastUpdateTime = 0.0
 local lastSpawnTime = 0.0
+local curentSpawnInterval = 2200
 local lastShotFiredTime = 0.0
 
 local lives = 3
@@ -107,16 +108,16 @@ local function spawnBird()
    bird.name = "bird"
 
    if zPosition == 4 then
-      bird:scale(0.5, 0.5)
+      bird:scale(0.6, 0.6)
       zLayer4:insert(bird)
    elseif zPosition == 3 then
-      bird:scale(0.425, 0.425)
+      bird:scale(0.525, 0.525)
       zLayer3:insert(bird)
    elseif zPosition == 2 then
-      bird:scale(0.325, 0.325)
+      bird:scale(0.375, 0.375)
       zLayer2:insert(bird)
    elseif zPosition == 1 then
-      bird:scale(0.25, 0.25)
+      bird:scale(0.3, 0.3)
       zLayer1:insert(bird)
    end
 
@@ -212,7 +213,7 @@ local function validateCollision(missile)
       local xScale = missile.xScale - 0.1
       local yScale = missile.yScale - 0.1
 
-      if xScale > 0 and yScale > 0 then
+      if xScale > 0.00001 and yScale > 0.00001 then
          if missile.zPosition == 4 then
             zLayer5:remove(missile)
             zLayer4:insert(missile)
@@ -337,6 +338,14 @@ local function validateCollision(missile)
 end
 
 local function shoot(tap)
+   local shotTime = system.getTimer()
+   local timeBetween = shotTime - lastShotFiredTime
+   lastShotFiredTime = shotTime
+
+   if timeBetween < curentSpawnInterval * 0.25 then
+      return true
+   end
+
    audio.play(sounds["shot"])
 
    local sequences_missile = {
@@ -364,7 +373,7 @@ end
 
 local function update(event)
    local timeSinceLast = event.time - lastUpdateTime
-   lastUpdateTime = system.getTimer()
+   lastUpdateTime = event.time
 
    if timeSinceLast > 1000 then
       timeSinceLast = 1 / 60 * 1000
@@ -376,91 +385,109 @@ local function update(event)
       if lastSpawnTime > 2200 then
          spawnBird()
          lastSpawnTime = 0.0
+         curentSpawnInterval = 2200
       end
    elseif score > 10 and score <= 20 then
       if lastSpawnTime > 2000 then
          spawnBird()
          lastSpawnTime = 0.0
+         curentSpawnInterval = 2000
       end
    elseif score > 20 and score <= 25 then
       if lastSpawnTime > 1800 then
          spawnBird()
          lastSpawnTime = 0.0
+         curentSpawnInterval = 1800
       end
    elseif score > 25 and score <= 35 then
       if lastSpawnTime > 1600 then
          spawnBird()
          lastSpawnTime = 0.0
+         curentSpawnInterval = 1600
       end
    elseif score > 35 and score <= 40 then
       if lastSpawnTime > 1400 then
          spawnBird()
          lastSpawnTime = 0.0
+         curentSpawnInterval = 1400
       end
    elseif score > 40 and score <= 45 then
       if lastSpawnTime > 1200 then
          spawnBird()
          lastSpawnTime = 0.0
+         curentSpawnInterval = 1200
       end
    elseif score > 45 and score <= 50 then
       if lastSpawnTime > 1150 then
          spawnBird()
          lastSpawnTime = 0.0
+         curentSpawnInterval = 1150
       end
    elseif score > 50 and score <= 55 then
       if lastSpawnTime > 1100 then
          spawnBird()
          lastSpawnTime = 0.0
+         curentSpawnInterval = 1100
       end
    elseif score > 55 and score <= 60 then
       if lastSpawnTime > 1050 then
          spawnBird()
          lastSpawnTime = 0.0
+         curentSpawnInterval = 1050
       end
    elseif score > 60 and score <= 65 then
       if lastSpawnTime > 1000 then
          spawnBird()
          lastSpawnTime = 0.0
+         curentSpawnInterval = 1000
       end
    elseif score > 65 and score <= 70 then
       if lastSpawnTime > 950 then
          spawnBird()
          lastSpawnTime = 0.0
+         curentSpawnInterval = 950
       end
    elseif score > 70 and score <= 80 then
       if lastSpawnTime > 900 then
          spawnBird()
          lastSpawnTime = 0.0
+         curentSpawnInterval = 900
       end
    elseif score > 80 and score <= 90 then
       if lastSpawnTime > 850 then
          spawnBird()
          lastSpawnTime = 0.0
+         curentSpawnInterval = 850
       end
    elseif score > 90 and score <= 100 then
       if lastSpawnTime > 800 then
          spawnBird()
          lastSpawnTime = 0.0
+         curentSpawnInterval = 800
       end
    elseif score > 100 and score <= 110 then
       if lastSpawnTime > 750 then
          spawnBird()
          lastSpawnTime = 0.0
+         curentSpawnInterval = 750
       end
    elseif score > 110 and score <= 120 then
       if lastSpawnTime > 700 then
          spawnBird()
          lastSpawnTime = 0.0
+         curentSpawnInterval = 700
       end
    elseif score > 120 and score <= 320 then
       if lastSpawnTime > 650 then
          spawnBird()
          lastSpawnTime = 0.0
+         curentSpawnInterval = 650
       end
    else
       if lastSpawnTime > 600 then
          spawnBird()
          lastSpawnTime = 0.0
+         curentSpawnInterval = 650
       end
    end
 end

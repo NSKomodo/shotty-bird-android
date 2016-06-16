@@ -41,7 +41,7 @@ local textOptions = {
    align = "center",
    color = { 1,1,1,1 },
    strokeColor = { 0, 0, 0, 1 },
-   strokeWidth = 3
+   strokeWidth = 4
 }
 
 -- AdMob
