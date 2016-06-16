@@ -190,17 +190,17 @@ function scene:create(event)
    leaderboardButton:addEventListener("tap", handleLeaderboardButton)
    sceneGroup:insert(leaderboardButton)
 
-   playButton = display.newImage("assets/game_over/replay_button.png", leaderboardButton.x - leaderboardButton.width / 2 - 12, leaderboardButton.y)
+   playButton = display.newImage("assets/game_over/replay_button.png", leaderboardButton.x - leaderboardButton.width / 2 - 15, leaderboardButton.y)
    playButton:scale(0.6, 0.6)
    playButton:addEventListener("tap", handlePlayButton)
    sceneGroup:insert(playButton)
 
-   backButton = display.newImage("assets/back_button.png", playButton.x - playButton.width / 2 - 12, leaderboardButton.y)
+   backButton = display.newImage("assets/back_button.png", playButton.x - playButton.width / 2 - 15, leaderboardButton.y)
    backButton:scale(0.6, 0.6)
    backButton:addEventListener("tap", handleBackButton)
    sceneGroup:insert(backButton)
 
-   shareButton = display.newImage("assets/game_over/share_button.png", leaderboardButton.x + leaderboardButton.width / 2 + 12, leaderboardButton.y)
+   shareButton = display.newImage("assets/game_over/share_button.png", leaderboardButton.x + leaderboardButton.width / 2 + 15, leaderboardButton.y)
    shareButton:scale(0.6, 0.6)
    shareButton.serviceName = "share"
    shareButton:addEventListener("tap", handleShareButton)
