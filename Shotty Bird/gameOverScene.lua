@@ -185,7 +185,7 @@ function scene:create(event)
    sceneGroup:insert(gameOver)
 
    leaderboardButton = display.newImage("assets/game_over/leaderboard_button_icon.png", display.contentCenterX, panel.y + panel.contentHeight / 2 + 28)
-   leaderboardButton.x = leaderboardButton.x + leaderboardButton.contentWidth / 4 + 1.25
+   leaderboardButton.x = display.contentCenterX + leaderboardButton.contentWidth / 4 + 7.5
    leaderboardButton:scale(0.6, 0.6)
    leaderboardButton:addEventListener("tap", handleLeaderboardButton)
    sceneGroup:insert(leaderboardButton)
