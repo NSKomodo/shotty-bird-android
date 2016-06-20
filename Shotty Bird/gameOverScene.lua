@@ -16,7 +16,7 @@ local parallax = require("parallax")
 local score = 0
 
 local sounds = {
-   gameOver = audio.loadSound("sounds/game_over_music.mp3"),
+   gameOver = audio.loadStream("sounds/game_over_music.mp3"),
    bird = audio.loadSound("sounds/bird.mp3"),
    explosion = audio.loadSound("sounds/explosion.mp3"),
    screenshot = audio.loadSound("sounds/screenshot.mp3")
@@ -44,26 +44,10 @@ local textOptions = {
    strokeWidth = 4
 }
 
--- AdMob
-local ads = require("ads")
-local adUnit = "ca-app-pub-5774553422556987/6814602958"
-local adProvider = "admob"
-
-local function adListener( event )
-   local msg = event.response
-   print("Message from the ads library: ", msg)
- 
-   if (event.isError ) then
-      print("Error, no ad received", msg)
-   else
-      print("Ad loaded...")
-   end
-end
-
 local function handleBackButton(tap)
    local function gotoMainMenu(event)
       if event.completed then
-         ads.hide()
+         admob.hide()
          composer.gotoScene("mainMenuScene", { effect = "crossFade", time = 500 })
          composer.removeScene("gameOverScene")
       end
@@ -75,7 +59,7 @@ end
 local function handlePlayButton(tap)
    local function gotoGame(event)
       if event.completed then
-         ads.hide()
+         admob.hide()
          composer.gotoScene("gameScene", { effect = "crossFade", time = 500, params = { parallaxIndex = parallax.currentIndex } })
          composer.removeScene("gameOverScene")
       end
@@ -211,8 +195,6 @@ function scene:create(event)
    shareButton:addEventListener("tap", handleShareButton)
    sceneGroup:insert(shareButton)
 
-   ads.init(adProvider, adUnit, adListener)
-
    -- Report achievements
    -- Welcome to Sniper School
    if score == 0 then
@@ -285,8 +267,7 @@ function scene:show(event)
    local phase = event.phase
  
    if phase == "did" then
-      ads.show("banner", { x = 0, y = display.contentHeight, testMode = false })
-
+      admob.show()
       audio.play(sounds["gameOver"])
       parallax.start()
    end
