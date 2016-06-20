@@ -14,13 +14,13 @@ admob = require("admob")
 ------ HANDLE SYSTEM EVENTS ------
 local function systemEvents(event)
 	if event.type == "applicationStart" then
-      	gpgs.gameNetworkSetup()
-      	admob.init()
+      gpgs.gameNetworkSetup()
+      admob.init()
   	elseif event.type == "applicationResume" then
   		gpgs.gameNetworkSetup()
-   	end
+   end
 
-   	return true
+   return true
 end
 
 Runtime:addEventListener("system", systemEvents)

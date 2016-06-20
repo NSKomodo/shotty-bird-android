@@ -20,8 +20,8 @@ local function adListener(event)
 	local msg = event.response
    	print("Message from the ads library: ", msg)
  
-   	if (event.isError ) then
-      	print("Error, no ad received", msg)
+   	if event.isError then
+   		print("Error, no ad received", msg)
    	else
    		print("Ad loaded...")
    	end
