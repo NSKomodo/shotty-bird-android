@@ -108,14 +108,10 @@ local function handleShareButton(tap)
             native.showPopup("social",
             {
                service = serviceName, -- The service key is ignored on Android.
-               message = "I just shot down " .. score .. " " .. birdText .. " in @shottybird. Download now for FREE. #happyhunting",
+               message = "I just shot down " .. score .. " " .. birdText .. " in @shottybird. Download now for FREE. http://shottybird.com/get #happyhunting",
                listener = listener,
                image = {
                   { filename = "score.png", baseDir = system.TemporaryDirectory }
-               },
-               url =
-               { 
-                  "https://play.google.com/store/apps/details?id=co.profapps.shottybird"
                }
             })
          else

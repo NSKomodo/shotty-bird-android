@@ -154,7 +154,8 @@ local function spawnBird()
       end
    end
 
-   local speed = math.random(2500, 4000)
+   local speeds = { 2.0, 2.25, 2.5, 2.75, 3.0 }
+   local speed = speeds[math.random(1, #speeds)] * 1000
    bird.speed = speed
 
    transition.to(bird, { time = speed, x = -(bird.contentWidth / 2), y = bird.y, onComplete = removeBird })
@@ -301,7 +302,7 @@ local function validateCollision(missile)
                   if hasCollided(missile, zLayer1[i]) then
                      audio.play(sounds["explosion"])
 
-                     if zLayer1[i].speed == 2500 then
+                     if zLayer1[i].speed == 2000 then
                         gpgs.gameNetwork.request("unlockAchievement",
                         {
                            achievement = { identifier = "CgkI_7aYvaIVEAIQCQ", percentComplete = 100, showsCompletionBanner = true }
