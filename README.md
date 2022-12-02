@@ -1,4 +1,4 @@
-#Shotty Bird Android
+# Shotty Bird Android
 
 Shotty Bird is a challenging arcade shooter game that will put your marksmanship to test.
 
